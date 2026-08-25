@@ -4,15 +4,6 @@ import {
 } from "vitest";
 
 
-/* ======================================================
-   MOCK BROWSER SCROLL APIs
-   ====================================================== */
-
-/*
- * jsdom tidak benar-benar melakukan scrolling.
- * Frontend menggunakan window.scrollTo().
- */
-
 Object.defineProperty(
   window,
   "scrollTo",
@@ -23,15 +14,6 @@ Object.defineProperty(
   }
 );
 
-
-/*
- * Frontend juga menggunakan:
- *
- * element.scrollIntoView(...)
- *
- * Method ini tersedia di browser normal,
- * tetapi tidak diimplementasikan penuh oleh jsdom.
- */
 
 Object.defineProperty(
   window.Element.prototype,
@@ -44,9 +26,58 @@ Object.defineProperty(
 );
 
 
-/* ======================================================
-   CLEANUP
-   ====================================================== */
+class MockDataTransfer {
+
+  constructor() {
+
+    this._files = [];
+
+
+    this.items = {
+
+      add: (file) => {
+
+        this._files.push(
+          file
+        );
+
+      }
+
+    };
+
+  }
+
+
+  get files() {
+
+    return this._files;
+
+  }
+
+}
+
+
+Object.defineProperty(
+  globalThis,
+  "DataTransfer",
+  {
+    configurable: true,
+    writable: true,
+    value: MockDataTransfer
+  }
+);
+
+
+Object.defineProperty(
+  window,
+  "DataTransfer",
+  {
+    configurable: true,
+    writable: true,
+    value: MockDataTransfer
+  }
+);
+
 
 afterEach(
   () => {

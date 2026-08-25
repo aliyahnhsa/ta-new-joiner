@@ -2,1048 +2,66 @@ import {
   beforeEach,
   describe,
   expect,
-  it,
-  vi
+  it
 } from "vitest";
 
 
 import {
-  readFile
-} from "node:fs/promises";
+  bootFrontend,
+  checkRadio,
+  clickNext,
+  createPdfFile,
+  fillValidForm,
+  fillValidPage2,
+  fillValidPage3,
+  getById,
+  getPostCalls,
+  getPostPayload,
+  getVisiblePage,
+  installFileState,
+  openSubmitConfirmation,
+  selectValue,
+  setCheckbox,
+  setFile,
+  setInputValue,
+  waitUntil
+} from "./test-utils.js";
 
 
-import {
-  dirname,
-  resolve
-} from "node:path";
+
+beforeEach(
+  () => {
+
+    document.body.innerHTML =
+      "";
 
 
-import {
-  fileURLToPath
-} from "node:url";
+    localStorage.clear();
 
 
-/* ======================================================
-   PROJECT PATH
-   ====================================================== */
-
-const currentDirectory =
-  dirname(
-    fileURLToPath(
-      import.meta.url
-    )
-  );
-
-
-const projectRoot =
-  resolve(
-    currentDirectory,
-    ".."
-  );
-
-
-const indexHtmlPath =
-  resolve(
-    projectRoot,
-    "index.html"
-  );
-
-
-/* ======================================================
-   TEST REGION DATA
-   ====================================================== */
-
-/*
- * Kita tidak perlu load seluruh wilayah-data.js
- * untuk unit test.
- *
- * Cukup sample kecil untuk mengetes:
- *
- * Provinsi
- * → Kota
- * → Kecamatan
- * → Kelurahan
- */
-
-const TEST_REGION_DATA = [
-
-  [
-    "31",
-    "DKI JAKARTA"
-  ],
-
-  [
-    "31.71",
-    "KOTA JAKARTA PUSAT"
-  ],
-
-  [
-    "31.71.01",
-    "GAMBIR"
-  ],
-
-  [
-    "31.71.01.1001",
-    "GAMBIR"
-  ],
-
-
-  [
-    "32",
-    "JAWA BARAT"
-  ],
-
-  [
-    "32.73",
-    "KOTA BANDUNG"
-  ],
-
-  [
-    "32.73.01",
-    "SUKASARI"
-  ],
-
-  [
-    "32.73.01.1001",
-    "ISOLA"
-  ]
-
-];
-
-
-/* ======================================================
-   HELPERS
-   ====================================================== */
-
-async function flushPromises() {
-
-  /*
-   * Beberapa initialization app menggunakan
-   * async fetch untuk CSV.
-   *
-   * Kasih event loop waktu untuk menyelesaikannya.
-   */
-
-  await Promise.resolve();
-
-  await Promise.resolve();
-
-
-  await new Promise(
-    (resolvePromise) => {
-
-      setTimeout(
-        resolvePromise,
-        0
-      );
-
-    }
-  );
-
-
-  await Promise.resolve();
-
-}
-
-
-async function waitUntil(
-  callback,
-  timeout = 2500
-) {
-
-  const start =
-    Date.now();
-
-
-  let lastError =
-    null;
-
-
-  while (
-    Date.now() - start <
-    timeout
-  ) {
-
-    try {
-
-      return callback();
-
-    } catch (error) {
-
-      lastError =
-        error;
-
-    }
-
-
-    await new Promise(
-      (resolvePromise) => {
-
-        setTimeout(
-          resolvePromise,
-          10
-        );
-
-      }
-    );
+    delete window.__POWER_AUTOMATE_URL__;
 
   }
+);
 
 
-  throw (
-    lastError ||
-    new Error(
-      "Condition was not reached before timeout."
-    )
-  );
-
-}
-
-
-function getById(id) {
-
-  return document.getElementById(
-    id
-  );
-
-}
-
-
-function setInputValue(
-  id,
-  value
-) {
-
-  const element =
-    getById(
-      id
-    );
-
-
-  element.value =
-    value;
-
-
-  element.dispatchEvent(
-    new Event(
-      "input",
-      {
-        bubbles: true
-      }
-    )
-  );
-
-
-  element.dispatchEvent(
-    new Event(
-      "change",
-      {
-        bubbles: true
-      }
-    )
-  );
-
-
-  return element;
-
-}
-
-
-function selectValue(
-  id,
-  value
-) {
-
-  const select =
-    getById(
-      id
-    );
-
-
-  select.value =
-    value;
-
-
-  select.dispatchEvent(
-    new Event(
-      "change",
-      {
-        bubbles: true
-      }
-    )
-  );
-
-
-  return select;
-
-}
-
-
-function checkRadio(
-  name,
-  value
-) {
-
-  const radio =
-    document.querySelector(
-      `input[type="radio"][name="${name}"][value="${value}"]`
-    );
-
-
-  if (
-    !radio
-  ) {
-
-    throw new Error(
-      `Radio "${name}" value "${value}" tidak ditemukan.`
-    );
-
-  }
-
-
-  radio.checked =
-    true;
-
-
-  radio.dispatchEvent(
-    new Event(
-      "change",
-      {
-        bubbles: true
-      }
-    )
-  );
-
-
-  return radio;
-
-}
-
-
-function setCheckbox(
-  id,
-  checked
-) {
-
-  const checkbox =
-    getById(
-      id
-    );
-
-
-  checkbox.checked =
-    checked;
-
-
-  checkbox.dispatchEvent(
-    new Event(
-      "change",
-      {
-        bubbles: true
-      }
-    )
-  );
-
-
-  return checkbox;
-
-}
-
-
-function createPdfFile(
-  fileName = "test.pdf",
-  size = 100
-) {
-
-  return new File(
-    [
-      new Uint8Array(
-        size
-      )
-    ],
-    fileName,
-    {
-      type:
-        "application/pdf"
-    }
-  );
-
-}
-
-
-function setFile(
-  id,
-  file
-) {
-
-  const input =
-    getById(
-      id
-    );
-
-
-  Object.defineProperty(
-    input,
-    "files",
-    {
-
-      configurable:
-        true,
-
-      value: [
-        file
-      ]
-
-    }
-  );
-
-
-  input.dispatchEvent(
-    new Event(
-      "change",
-      {
-        bubbles: true
-      }
-    )
-  );
-
-
-  return input;
-
-}
-
-
-function clickNext(
-  pageNumber
-) {
-
-  const button =
-    document.querySelector(
-      `[data-form-page="${pageNumber}"] [data-next-page]`
-    );
-
-
-  button.click();
-
-}
-
-
-function getVisiblePage() {
-
-  return document.querySelector(
-    ".form-page.is-visible"
-  );
-
-}
-
-
-/* ======================================================
-   MOCK FETCH
-   ====================================================== */
-
-function createFetchMock() {
-
-  return vi.fn(
-    async (
-      url,
-      options = {}
-    ) => {
-
-      const urlString =
-        String(
-          url
-        );
-
-
-      /*
-       * Mock organization.csv
-       */
-
-      if (
-        urlString.includes(
-          "organization.csv"
-        )
-      ) {
-
-        return {
-
-          ok:
-            true,
-
-
-          status:
-            200,
-
-
-          text:
-            async () =>
-              [
-                "directorate,unit",
-                "Technology,Other",
-                "Technology,Business Support Systems Sub Unit",
-                "Commercial,Other",
-                "Commercial,Product Management Unit"
-              ].join(
-                "\n"
-              )
-
-        };
-
-      }
-
-
-      /*
-       * Mock recruiters.csv
-       */
-
-      if (
-        urlString.includes(
-          "recruiters.csv"
-        )
-      ) {
-
-        return {
-
-          ok:
-            true,
-
-
-          status:
-            200,
-
-
-          text:
-            async () =>
-              [
-                "name",
-                "Audy Atira Pramono",
-                "Demus Abethego"
-              ].join(
-                "\n"
-              )
-
-        };
-
-      }
-
-
-      /*
-       * Semua request lain dianggap
-       * request backend Power Automate.
-       *
-       * Kita TIDAK benar-benar call network.
-       */
-
-      if (
-        options.method ===
-        "POST"
-      ) {
-
-        return {
-
-          ok:
-            true,
-
-
-          status:
-            200,
-
-
-          text:
-            async () =>
-              JSON.stringify(
-                {
-                  success:
-                    true
-                }
-              )
-
-        };
-
-      }
-
-
-      return {
-
-        ok:
-          true,
-
-
-        status:
-          200,
-
-
-        text:
-          async () =>
-            ""
-
-      };
-
-    }
-  );
-
-}
-
-
-/* ======================================================
-   BOOT FRONTEND
-   ====================================================== */
-
-async function bootFrontend() {
-
-  vi.resetModules();
-
-
-  localStorage.clear();
-
-
-  /*
-   * Read real index.html.
-   */
-
-  const html =
-    await readFile(
-      indexHtmlPath,
-      "utf8"
-    );
-
-
-  /*
-   * Hapus script tag supaya jsdom tidak
-   * mencoba execute script HTML sendiri.
-   *
-   * app.js nanti kita import manual.
-   */
-
-  const htmlWithoutScripts =
-    html.replace(
-      /<script\b[^>]*>[\s\S]*?<\/script>/gi,
-      ""
-    );
-
-
-  document.open();
-
-  document.write(
-    htmlWithoutScripts
-  );
-
-  document.close();
-
-
-  /*
-   * Inject test wilayah.
-   */
-
-  window.WILAYAH_INDONESIA =
-    TEST_REGION_DATA;
-
-
-  /*
-   * Mock fetch.
-   */
-
-  const fetchMock =
-    createFetchMock();
-
-
-  vi.stubGlobal(
-    "fetch",
-    fetchMock
-  );
-
-
-  /*
-   * Suppress development console info.
-   */
-
-  vi.spyOn(
-    console,
-    "info"
-  ).mockImplementation(
-    () => {}
-  );
-
-
-  /*
-   * Execute REAL js/app.js.
-   */
-
-  await import(
-    "../js/app.js"
-  );
-
-
-  await flushPromises();
-
-
-  return {
-
-    fetchMock
-
-  };
-
-}
-
-
-/* ======================================================
-   VALID FULL FORM FIXTURE
-   ====================================================== */
-
-async function fillValidForm() {
-
-  /* ====================================================
-     PAGE 2
-     PERSONAL INFORMATION
-     ==================================================== */
-
-  setInputValue(
-    "namaDepan",
-    "Ara"
-  );
-
-
-  setInputValue(
-    "namaTengah",
-    "Rizkita"
-  );
-
-
-  setInputValue(
-    "namaBelakang",
-    "Setiadji"
-  );
-
-
-  setInputValue(
-    "kotaLahir",
-    "Jakarta"
-  );
-
-
-  checkRadio(
-    "JenisKelamin",
-    "Wanita"
-  );
-
-
-  setInputValue(
-    "tanggalLahir",
-    "2000-01-01"
-  );
-
-
-  setInputValue(
-    "alamatKtp",
-    "Jl. Test No. 1"
-  );
-
-
-  /*
-   * Cascading KTP address.
-   */
-
-  selectValue(
-    "provinsiKtp",
-    "DKI JAKARTA"
-  );
-
-
-  selectValue(
-    "kotaKtp",
-    "KOTA JAKARTA PUSAT"
-  );
-
-
-  selectValue(
-    "kecamatanKtp",
-    "GAMBIR"
-  );
-
-
-  selectValue(
-    "kelurahanKtp",
-    "GAMBIR"
-  );
-
-
-  setInputValue(
-    "rtRwKtp",
-    "001/002"
-  );
-
-
-  setInputValue(
-    "kodePosKtp",
-    "10110"
-  );
-
-
-  /*
-   * Same as KTP supaya domicile fields
-   * tidak perlu diisi ulang.
-   */
-
-  setCheckbox(
-    "alamatSamaDenganKtp",
-    true
-  );
-
-
-  setInputValue(
-    "nomorHandphone",
-    "081234567890"
-  );
-
-
-  setInputValue(
-    "nomorLinkAja",
-    "081234567891"
-  );
-
-
-  setInputValue(
-    "emailPribadi",
-    "ara.test@example.com"
-  );
-
-
-  setInputValue(
-    "namaEmergencyContact",
-    "Test Contact"
-  );
-
-
-  selectValue(
-    "hubunganEmergencyContact",
-    "Ibu"
-  );
-
-
-  setInputValue(
-    "nomorEmergencyContact",
-    "081234567892"
-  );
-
-
-  /* ====================================================
-     PAGE 3
-     DOCUMENTS
-     ==================================================== */
-
-  setInputValue(
-    "nomorKtp",
-    "3171234567890123"
-  );
-
-
-  setInputValue(
-    "nomorKk",
-    "3171234567890123"
-  );
-
-
-  setInputValue(
-    "nomorNpwp",
-    "0"
-  );
-
-
-  selectValue(
-    "statusPajak",
-    "TK/0"
-  );
-
-
-  setInputValue(
-    "namaPemilikTabungan",
-    "Ara Test"
-  );
-
-
-  setInputValue(
-    "nomorRekening",
-    "1234567890"
-  );
-
-
-  selectValue(
-    "namaBank",
-    "Bank Mandiri"
-  );
-
-
-  setInputValue(
-    "nomorBpjsKetenagakerjaan",
-    "0"
-  );
-
-
-  setInputValue(
-    "nomorBpjsKesehatan",
-    "0"
-  );
-
-
-  selectValue(
-    "pendidikanTerakhir",
-    "Sarjana / S1"
-  );
-
-
-  /*
-   * Required PDF files.
-   */
-
-  setFile(
-    "lampiranKtp",
-    createPdfFile(
-      "KTP_Ara.pdf"
-    )
-  );
-
-
-  setFile(
-    "lampiranKk",
-    createPdfFile(
-      "KK_Ara.pdf"
-    )
-  );
-
-
-  setFile(
-    "lampiranNpwp",
-    createPdfFile(
-      "NPWP_Ara.pdf"
-    )
-  );
-
-
-  setFile(
-    "lampiranBukuTabungan",
-    createPdfFile(
-      "Rekening_Ara.pdf"
-    )
-  );
-
-
-  setFile(
-    "lampiranIjazah",
-    createPdfFile(
-      "Ijazah_Ara.pdf"
-    )
-  );
-
-
-  /* ====================================================
-     PAGE 4
-     HR
-     ==================================================== */
-
-  setInputValue(
-    "tanggalJoin",
-    "2026-09-01"
-  );
-
-
-  checkRadio(
-    "LokasiKerja",
-    "Jakarta"
-  );
-
-
-  setInputValue(
-    "posisi",
-    "Software Engineer Intern"
-  );
-
-
-  /*
-   * CSV sudah dimock dan telah selesai load
-   * ketika helper ini dipanggil.
-   */
-
-  selectValue(
-    "direktorat",
-    "Technology"
-  );
-
-
-  selectValue(
-    "groupUnit",
-    "Business Support Systems Sub Unit"
-  );
-
-
-  setInputValue(
-    "atasan",
-    "Test Manager"
-  );
-
-
-  selectValue(
-    "recruiter",
-    "Audy Atira Pramono"
-  );
-
-
-  selectValue(
-    "ukuranKaos",
-    "M - 50 x 71 cm"
-  );
-
-
-  setFile(
-    "signedOfferProposal",
-    createPdfFile(
-      "Ara_SignedOfferProposal.pdf"
-    )
-  );
-
-
-  await flushPromises();
-
-}
-
-
-/* ======================================================
-   TEST SUITE
-   ====================================================== */
 
 describe(
   "LinkAja New Joiner Form - Frontend Unit Tests",
   () => {
 
 
-    beforeEach(
+
+    it(
+      "menampilkan halaman Intro saat pertama kali dibuka",
       async () => {
 
         await bootFrontend();
 
-      }
-    );
-
-
-    /* ==================================================
-       TEST 1
-       INITIAL PAGE
-       ================================================== */
-
-    it(
-      "menampilkan halaman Intro saat pertama kali dibuka",
-      () => {
-
-        const visiblePage =
-          getVisiblePage();
-
 
         expect(
-          visiblePage
-        ).not.toBeNull();
-
-
-        expect(
-          visiblePage.dataset
+          getVisiblePage()
+            ?.dataset
             .formPage
         ).toBe(
           "1"
@@ -1051,11 +69,14 @@ describe(
 
 
         expect(
-          document.querySelector(
-            '[data-step-indicator="1"]'
-          ).classList.contains(
-            "is-active"
-          )
+          document
+            .querySelector(
+              '[data-step-indicator="1"]'
+            )
+            .classList
+            .contains(
+              "is-active"
+            )
         ).toBe(
           true
         );
@@ -1064,14 +85,13 @@ describe(
     );
 
 
-    /* ==================================================
-       TEST 2
-       NAVIGATION
-       ================================================== */
 
     it(
       "berpindah dari Intro ke Informasi Pribadi ketika Next diklik",
-      () => {
+      async () => {
+
+        await bootFrontend();
+
 
         clickNext(
           1
@@ -1080,7 +100,7 @@ describe(
 
         expect(
           getVisiblePage()
-            .dataset
+            ?.dataset
             .formPage
         ).toBe(
           "2"
@@ -1088,11 +108,14 @@ describe(
 
 
         expect(
-          document.querySelector(
-            '[data-step-indicator="2"]'
-          ).classList.contains(
-            "is-active"
-          )
+          document
+            .querySelector(
+              '[data-step-indicator="2"]'
+            )
+            .classList
+            .contains(
+              "is-active"
+            )
         ).toBe(
           true
         );
@@ -1101,14 +124,13 @@ describe(
     );
 
 
-    /* ==================================================
-       TEST 3
-       REQUIRED VALIDATION
-       ================================================== */
 
     it(
       "tidak mengizinkan lanjut jika field wajib halaman 2 masih kosong",
-      () => {
+      async () => {
+
+        await bootFrontend();
+
 
         clickNext(
           1
@@ -1122,7 +144,7 @@ describe(
 
         expect(
           getVisiblePage()
-            .dataset
+            ?.dataset
             .formPage
         ).toBe(
           "2"
@@ -1152,14 +174,13 @@ describe(
     );
 
 
-    /* ==================================================
-       TEST 4
-       DOMICILE TOGGLE
-       ================================================== */
 
     it(
       "menonaktifkan field domisili ketika alamat sama dengan KTP",
-      () => {
+      async () => {
+
+        await bootFrontend();
+
 
         setCheckbox(
           "alamatSamaDenganKtp",
@@ -1167,14 +188,14 @@ describe(
         );
 
 
-        const domicilePanel =
+        const panel =
           getById(
             "domicileFields"
           );
 
 
         expect(
-          domicilePanel.classList.contains(
+          panel.classList.contains(
             "is-hidden"
           )
         ).toBe(
@@ -1182,7 +203,7 @@ describe(
         );
 
 
-        domicilePanel
+        panel
           .querySelectorAll(
             "input, select"
           )
@@ -1200,9 +221,12 @@ describe(
 
 
         expect(
-          document.querySelector(
-            '[data-toggle-state="alamatSamaDenganKtp"]'
-          ).textContent.trim()
+          document
+            .querySelector(
+              '[data-toggle-state="alamatSamaDenganKtp"]'
+            )
+            .textContent
+            .trim()
         ).toBe(
           "YA"
         );
@@ -1211,14 +235,104 @@ describe(
     );
 
 
-    /* ==================================================
-       TEST 5
-       PARTNER TOGGLE
-       ================================================== */
+
+    it(
+      "mengirim alamat domisili berbeda dari KTP ketika toggle = TIDAK",
+      async () => {
+
+        const {
+          fetchMock
+        } =
+          await bootFrontend();
+
+
+        await fillValidForm({
+          sameAsKtp:
+            false
+        });
+
+
+        openSubmitConfirmation();
+
+
+        getById(
+          "confirmSubmitButton"
+        ).click();
+
+
+        await waitUntil(
+          () => {
+
+            expect(
+              getPostCalls(
+                fetchMock
+              )
+            ).toHaveLength(
+              1
+            );
+
+          }
+        );
+
+
+        const payload =
+          getPostPayload(
+            fetchMock
+          );
+
+
+        expect(
+          payload.AlamatSamaDenganKTP
+        ).toBe(
+          "TIDAK"
+        );
+
+
+        expect(
+          payload.AlamatKTP
+        ).toBe(
+          "Jl. KTP Test No. 1"
+        );
+
+
+        expect(
+          payload.AlamatDomisili
+        ).toBe(
+          "Jl. Domisili Test No. 2"
+        );
+
+
+        expect(
+          payload.ProvinsiKTP
+        ).toBe(
+          "DKI JAKARTA"
+        );
+
+
+        expect(
+          payload.ProvinsiDomisili
+        ).toBe(
+          "JAWA BARAT"
+        );
+
+
+        expect(
+          payload.KotaDomisili
+        ).toBe(
+          "KOTA BANDUNG"
+        );
+
+      }
+    );
+
+
 
     it(
       "menampilkan dan mewajibkan data pasangan ketika toggle pasangan = YA",
-      () => {
+      async () => {
+
+        await bootFrontend();
+
 
         setCheckbox(
           "memilikiPasangan",
@@ -1276,14 +390,401 @@ describe(
     );
 
 
-    /* ==================================================
-       TEST 6
-       OTHER BANK
-       ================================================== */
+
+    it(
+      "menonaktifkan pasangan lagi saat toggle berubah YA ke TIDAK dan tidak memasukkannya ke payload",
+      async () => {
+
+        const {
+          fetchMock
+        } =
+          await bootFrontend();
+
+
+        await fillValidForm();
+
+
+        setCheckbox(
+          "memilikiPasangan",
+          true
+        );
+
+
+        setInputValue(
+          "namaPasangan",
+          "Pasangan Lama"
+        );
+
+
+        setInputValue(
+          "nomorKtpPasangan",
+          "3171234567890999"
+        );
+
+
+        setFile(
+          "lampiranKtpPasangan",
+          createPdfFile(
+            "KTP_Pasangan.pdf"
+          )
+        );
+
+
+        setCheckbox(
+          "memilikiPasangan",
+          false
+        );
+
+
+        expect(
+          getById(
+            "partnerFields"
+          ).classList.contains(
+            "is-hidden"
+          )
+        ).toBe(
+          true
+        );
+
+
+        expect(
+          getById(
+            "namaPasangan"
+          ).disabled
+        ).toBe(
+          true
+        );
+
+
+        expect(
+          getById(
+            "namaPasangan"
+          ).required
+        ).toBe(
+          false
+        );
+
+
+        expect(
+          getById(
+            "lampiranKtpPasangan"
+          ).disabled
+        ).toBe(
+          true
+        );
+
+
+        openSubmitConfirmation();
+
+
+        getById(
+          "confirmSubmitButton"
+        ).click();
+
+
+        await waitUntil(
+          () => {
+
+            expect(
+              getPostCalls(
+                fetchMock
+              )
+            ).toHaveLength(
+              1
+            );
+
+          }
+        );
+
+
+        const payload =
+          getPostPayload(
+            fetchMock
+          );
+
+
+        expect(
+          payload.MemilikiPasangan
+        ).toBe(
+          "TIDAK"
+        );
+
+
+        expect(
+          payload.NamaPasangan
+        ).toBe(
+          ""
+        );
+
+
+        expect(
+          payload.NomorKTPPasangan
+        ).toBe(
+          ""
+        );
+
+
+        expect(
+          payload.attachments.some(
+            (attachment) =>
+              attachment.fieldName ===
+              "LampiranKTPPasangan"
+          )
+        ).toBe(
+          false
+        );
+
+      }
+    );
+
+
+
+    it(
+      "menolak data anak jika hanya nama anak yang diisi",
+      async () => {
+
+        await bootFrontend();
+
+
+        clickNext(
+          1
+        );
+
+
+        await fillValidPage2();
+
+
+        clickNext(
+          2
+        );
+
+
+        await fillValidPage3();
+
+
+        setCheckbox(
+          "memilikiAnak",
+          true
+        );
+
+
+        setInputValue(
+          "namaAnakPertama",
+          "Anak Test"
+        );
+
+
+        clickNext(
+          3
+        );
+
+
+        expect(
+          getVisiblePage()
+            ?.dataset
+            .formPage
+        ).toBe(
+          "3"
+        );
+
+
+
+        expect(
+          getById(
+            "lampiranAnakPertama"
+          ).checkValidity()
+        ).toBe(
+          false
+        );
+
+
+        expect(
+          getById(
+            "lampiranAnakPertama"
+          ).validationMessage
+        ).not.toBe(
+          ""
+        );
+
+      }
+    );
+
+
+    it(
+      "menolak data anak jika hanya file anak yang diisi",
+      async () => {
+
+        await bootFrontend();
+
+
+        clickNext(
+          1
+        );
+
+
+        await fillValidPage2();
+
+
+        clickNext(
+          2
+        );
+
+
+        await fillValidPage3();
+
+
+        setCheckbox(
+          "memilikiAnak",
+          true
+        );
+
+
+        setFile(
+          "lampiranAnakPertama",
+          createPdfFile(
+            "Anak_Test.pdf"
+          )
+        );
+
+
+        clickNext(
+          3
+        );
+
+
+
+        expect(
+          getVisiblePage()
+            ?.dataset
+            .formPage
+        ).toBe(
+          "3"
+        );
+
+
+
+        expect(
+          getById(
+            "namaAnakPertama"
+          ).checkValidity()
+        ).toBe(
+          false
+        );
+
+
+        expect(
+          getById(
+            "namaAnakPertama"
+          ).validationMessage
+        ).not.toBe(
+          ""
+        );
+
+      }
+    );
+
+
+
+    it(
+      "menolak anak kedua dan ketiga yang diisi setengah-setengah",
+      async () => {
+
+        await bootFrontend();
+
+
+        clickNext(
+          1
+        );
+
+
+        await fillValidPage2();
+
+
+        clickNext(
+          2
+        );
+
+
+        await fillValidPage3();
+
+
+        setCheckbox(
+          "memilikiAnak",
+          true
+        );
+
+        setInputValue(
+          "namaAnakPertama",
+          "Anak Pertama"
+        );
+
+
+        setFile(
+          "lampiranAnakPertama",
+          createPdfFile(
+            "Anak_Pertama.pdf"
+          )
+        );
+
+
+
+        setInputValue(
+          "namaAnakKedua",
+          "Anak Kedua"
+        );
+
+
+
+        setFile(
+          "lampiranAnakKetiga",
+          createPdfFile(
+            "Anak_Ketiga.pdf"
+          )
+        );
+
+
+        clickNext(
+          3
+        );
+
+
+        expect(
+          getVisiblePage()
+            ?.dataset
+            .formPage
+        ).toBe(
+          "3"
+        );
+
+
+        expect(
+          getById(
+            "lampiranAnakKedua"
+          ).checkValidity()
+        ).toBe(
+          false
+        );
+
+
+        expect(
+          getById(
+            "namaAnakKetiga"
+          ).checkValidity()
+        ).toBe(
+          false
+        );
+
+      }
+    );
+
+
 
     it(
       "menampilkan field Nama Bank Lainnya ketika memilih Lainnya",
-      () => {
+      async () => {
+
+        await bootFrontend();
+
 
         selectValue(
           "namaBank",
@@ -1323,24 +824,301 @@ describe(
     );
 
 
-    /* ==================================================
-       TEST 7
-       CASCADING REGION
-       ================================================== */
 
     it(
-      "mengisi dropdown wilayah secara cascading",
-      () => {
+      "menyembunyikan dan membersihkan Nama Bank Lainnya saat kembali memilih bank biasa",
+      async () => {
 
-        const province =
+        await bootFrontend();
+
+
+        selectValue(
+          "namaBank",
+          "Lainnya"
+        );
+
+
+        setInputValue(
+          "namaBankLainnya",
+          "Bank Test Custom"
+        );
+
+
+        selectValue(
+          "namaBank",
+          "Bank Mandiri"
+        );
+
+
+        expect(
           getById(
-            "provinsiKtp"
+            "otherBankField"
+          ).classList.contains(
+            "is-hidden"
+          )
+        ).toBe(
+          true
+        );
+
+
+        expect(
+          getById(
+            "namaBankLainnya"
+          ).disabled
+        ).toBe(
+          true
+        );
+
+
+        expect(
+          getById(
+            "namaBankLainnya"
+          ).required
+        ).toBe(
+          false
+        );
+
+
+        expect(
+          getById(
+            "namaBankLainnya"
+          ).value
+        ).toBe(
+          ""
+        );
+
+      }
+    );
+
+
+
+    it(
+      "menampilkan field unit lainnya ketika Group/Unit = Other lalu membersihkannya saat kembali normal",
+      async () => {
+
+        await bootFrontend();
+
+
+        selectValue(
+          "direktorat",
+          "Technology"
+        );
+
+
+        selectValue(
+          "groupUnit",
+          "Other"
+        );
+
+
+        expect(
+          getById(
+            "otherUnitField"
+          ).classList.contains(
+            "is-hidden"
+          )
+        ).toBe(
+          false
+        );
+
+
+        expect(
+          getById(
+            "groupUnitLainnya"
+          ).disabled
+        ).toBe(
+          false
+        );
+
+
+        expect(
+          getById(
+            "groupUnitLainnya"
+          ).required
+        ).toBe(
+          true
+        );
+
+
+        setInputValue(
+          "groupUnitLainnya",
+          "Custom Unit"
+        );
+
+
+        selectValue(
+          "groupUnit",
+          "Business Support Systems Sub Unit"
+        );
+
+
+        expect(
+          getById(
+            "otherUnitField"
+          ).classList.contains(
+            "is-hidden"
+          )
+        ).toBe(
+          true
+        );
+
+
+        expect(
+          getById(
+            "groupUnitLainnya"
+          ).disabled
+        ).toBe(
+          true
+        );
+
+
+        expect(
+          getById(
+            "groupUnitLainnya"
+          ).required
+        ).toBe(
+          false
+        );
+
+
+        expect(
+          getById(
+            "groupUnitLainnya"
+          ).value
+        ).toBe(
+          ""
+        );
+
+      }
+    );
+
+
+
+    it(
+      "menggunakan fallback organization dan recruiter jika CSV return HTTP error",
+      async () => {
+
+        await bootFrontend({
+          csvMode:
+            "httpError"
+        });
+
+
+        const directorates =
+          Array.from(
+            getById(
+              "direktorat"
+            ).options
+          ).map(
+            (option) =>
+              option.value
+          );
+
+
+        const recruiters =
+          Array.from(
+            getById(
+              "recruiter"
+            ).options
+          ).map(
+            (option) =>
+              option.value
           );
 
 
         expect(
+          directorates
+        ).toContain(
+          "CEO Office"
+        );
+
+
+        expect(
+          directorates
+        ).toContain(
+          "Technology"
+        );
+
+
+        expect(
+          recruiters
+        ).toContain(
+          "Audy Atira Pramono"
+        );
+
+
+        expect(
+          recruiters
+        ).toContain(
+          "Demus Abethego"
+        );
+
+      }
+    );
+
+
+
+    it(
+      "menggunakan fallback organization dan recruiter jika fetch CSV gagal",
+      async () => {
+
+        await bootFrontend({
+          csvMode:
+            "networkError"
+        });
+
+
+        const directorates =
           Array.from(
-            province.options
+            getById(
+              "direktorat"
+            ).options
+          ).map(
+            (option) =>
+              option.value
+          );
+
+
+        const recruiters =
+          Array.from(
+            getById(
+              "recruiter"
+            ).options
+          ).map(
+            (option) =>
+              option.value
+          );
+
+
+        expect(
+          directorates
+        ).toContain(
+          "CEO Office"
+        );
+
+
+        expect(
+          recruiters
+        ).toContain(
+          "Audy Atira Pramono"
+        );
+
+      }
+    );
+
+
+    it(
+      "mengisi dropdown wilayah secara cascading",
+      async () => {
+
+        await bootFrontend();
+
+
+        expect(
+          Array.from(
+            getById(
+              "provinsiKtp"
+            ).options
           ).some(
             (option) =>
               option.value ===
@@ -1357,14 +1135,10 @@ describe(
         );
 
 
-        const city =
+        expect(
           getById(
             "kotaKtp"
-          );
-
-
-        expect(
-          city.disabled
+          ).disabled
         ).toBe(
           false
         );
@@ -1372,7 +1146,9 @@ describe(
 
         expect(
           Array.from(
-            city.options
+            getById(
+              "kotaKtp"
+            ).options
           ).some(
             (option) =>
               option.value ===
@@ -1428,14 +1204,13 @@ describe(
     );
 
 
-    /* ==================================================
-       TEST 8
-       FILE TYPE VALIDATION
-       ================================================== */
 
     it(
       "menolak file yang bukan PDF",
-      () => {
+      async () => {
+
+        await bootFrontend();
+
 
         const invalidFile =
           new File(
@@ -1495,14 +1270,13 @@ describe(
     );
 
 
-    /* ==================================================
-       TEST 9
-       FILE SIZE VALIDATION
-       ================================================== */
 
     it(
       "menolak PDF yang ukurannya lebih dari 5 MB",
-      () => {
+      async () => {
+
+        await bootFrontend();
+
 
         const oversizedFile =
           createPdfFile(
@@ -1546,132 +1320,217 @@ describe(
     );
 
 
-    /* ==================================================
-       TEST 10
-       VALID PDF
-       ================================================== */
 
     it(
-    "menerima file PDF valid di bawah 5 MB",
-    () => {
+      "menerima file PDF valid di bawah 5 MB",
+      async () => {
 
-        const validPdf =
-        createPdfFile(
-            "KTP_Ara.pdf",
-            1024
-        );
+        await bootFrontend();
 
 
         const input =
-        setFile(
+          setFile(
             "lampiranKtp",
-            validPdf
-        );
-
-
-        const uploadField =
-        input.closest(
-            ".upload-field"
-        );
-
-
-        /*
-        * Frontend harus menerima file.
-        */
-
-        expect(
-        uploadField.classList.contains(
-            "has-file"
-        )
-        ).toBe(
-        true
-        );
-
-
-        /*
-        * Tidak boleh ditandai error.
-        */
-
-        expect(
-        uploadField.classList.contains(
-            "has-error"
-        )
-        ).toBe(
-        false
-        );
-
-
-        /*
-        * Nama file harus muncul di UI.
-        */
-
-        expect(
-        uploadField
-            .querySelector(
-            "[data-file-name]"
+            createPdfFile(
+              "KTP_Ara.pdf",
+              1024
             )
-            .textContent
-        ).toBe(
-        "KTP_Ara.pdf"
-        );
-
-
-        /*
-        * File yang dibaca frontend harus benar.
-        */
-
-        expect(
-        input.files
-        ).toHaveLength(
-        1
-        );
-
-
-        expect(
-        input.files[0].name
-        ).toBe(
-        "KTP_Ara.pdf"
-        );
-
-
-        expect(
-        input.files[0].type
-        ).toBe(
-        "application/pdf"
-        );
-
-
-        expect(
-        input.files[0].size
-        ).toBeLessThanOrEqual(
-        5 * 1024 * 1024
-        );
-
-    }
-    );
-
-
-    /* ==================================================
-       TEST 11
-       CONFIRMATION MODAL
-       ================================================== */
-
-    it(
-      "menampilkan confirmation modal sebelum data dikirim",
-      async () => {
-
-        await fillValidForm();
-
-
-        const form =
-          getById(
-            "newJoinerForm"
           );
 
 
-        form.dispatchEvent(
+        const uploadField =
+          input.closest(
+            ".upload-field"
+          );
+
+
+        expect(
+          uploadField
+            .classList
+            .contains(
+              "has-file"
+            )
+        ).toBe(
+          true
+        );
+
+
+        expect(
+          uploadField
+            .classList
+            .contains(
+              "has-error"
+            )
+        ).toBe(
+          false
+        );
+
+
+        expect(
+          uploadField
+            .querySelector(
+              "[data-file-name]"
+            )
+            .textContent
+        ).toBe(
+          "KTP_Ara.pdf"
+        );
+
+
+        expect(
+          input.files
+        ).toHaveLength(
+          1
+        );
+
+
+        expect(
+          input.files[0].type
+        ).toBe(
+          "application/pdf"
+        );
+
+
+        expect(
+          input.files[0].size
+        ).toBeLessThanOrEqual(
+          5 *
+          1024 *
+          1024
+        );
+
+      }
+    );
+
+
+
+    it(
+      "bisa menghapus attachment opsional yang sudah dipilih",
+      async () => {
+
+        await bootFrontend();
+
+
+        const input =
+          setFile(
+            "lampiranBpjsKesehatan",
+            createPdfFile(
+              "BPJS_Kesehatan.pdf"
+            )
+          );
+
+
+        const uploadField =
+          input.closest(
+            ".upload-field"
+          );
+
+
+        const removeButton =
+          document.querySelector(
+            '[data-remove-file="lampiranBpjsKesehatan"]'
+          );
+
+
+        expect(
+          uploadField
+            .classList
+            .contains(
+              "has-file"
+            )
+        ).toBe(
+          true
+        );
+
+
+        expect(
+          removeButton.hidden
+        ).toBe(
+          false
+        );
+
+
+        removeButton.click();
+
+
+        expect(
+          input.files
+        ).toHaveLength(
+          0
+        );
+
+
+        expect(
+          uploadField
+            .classList
+            .contains(
+              "has-file"
+            )
+        ).toBe(
+          false
+        );
+
+
+        expect(
+          uploadField
+            .querySelector(
+              "[data-file-name]"
+            )
+            .textContent
+        ).toBe(
+          "Belum ada file"
+        );
+
+
+        expect(
+          removeButton.hidden
+        ).toBe(
+          true
+        );
+
+      }
+    );
+
+
+    it(
+      "menerima PDF melalui drag-and-drop",
+      async () => {
+
+        await bootFrontend();
+
+
+        const input =
+          getById(
+            "lampiranKtp"
+          );
+
+
+        installFileState(
+          input,
+          []
+        );
+
+
+        const uploadBox =
+          input
+            .closest(
+              ".upload-field"
+            )
+            .querySelector(
+              ".upload-box"
+            );
+
+
+        const droppedFile =
+          createPdfFile(
+            "KTP_Drop.pdf",
+            2048
+          );
+
+
+        const dropEvent =
           new Event(
-            "submit",
+            "drop",
             {
               bubbles:
                 true,
@@ -1679,8 +1538,150 @@ describe(
               cancelable:
                 true
             }
-          )
+          );
+
+
+        Object.defineProperty(
+          dropEvent,
+          "dataTransfer",
+          {
+            configurable:
+              true,
+
+            value: {
+              files: [
+                droppedFile
+              ]
+            }
+          }
         );
+
+
+        uploadBox.dispatchEvent(
+          dropEvent
+        );
+
+
+        expect(
+          input.files
+        ).toHaveLength(
+          1
+        );
+
+
+        expect(
+          input.files[0].name
+        ).toBe(
+          "KTP_Drop.pdf"
+        );
+
+
+        expect(
+          input
+            .closest(
+              ".upload-field"
+            )
+            .classList
+            .contains(
+              "has-file"
+            )
+        ).toBe(
+          true
+        );
+
+      }
+    );
+
+
+
+    it(
+      "menolak lanjut jika file wajib masih kosong",
+      async () => {
+
+        await bootFrontend();
+
+
+        clickNext(
+          1
+        );
+
+
+        await fillValidPage2();
+
+
+        clickNext(
+          2
+        );
+
+
+        await fillValidPage3({
+          skipFiles: [
+            "lampiranKtp"
+          ]
+        });
+
+
+        clickNext(
+          3
+        );
+
+
+        expect(
+          getVisiblePage()
+            ?.dataset
+            .formPage
+        ).toBe(
+          "3"
+        );
+
+
+        expect(
+          getById(
+            "lampiranKtp"
+          )
+            .closest(
+              ".upload-field"
+            )
+            .classList
+            .contains(
+              "has-error"
+            )
+        ).toBe(
+          true
+        );
+
+
+        expect(
+          getById(
+            "lampiranKtp"
+          )
+            .closest(
+              ".upload-field"
+            )
+            .querySelector(
+              "small"
+            )
+            .textContent
+        ).toContain(
+          "Silakan pilih file PDF"
+        );
+
+      }
+    );
+
+
+
+    it(
+      "menampilkan confirmation modal sebelum data dikirim",
+      async () => {
+
+        await bootFrontend();
+
+
+        await fillValidForm();
+
+
+        openSubmitConfirmation();
 
 
         expect(
@@ -1706,10 +1707,6 @@ describe(
     );
 
 
-    /* ==================================================
-       TEST 12
-       CANCEL CONFIRMATION
-       ================================================== */
 
     it(
       "tidak mengirim data ketika user memilih Periksa Lagi",
@@ -1724,20 +1721,7 @@ describe(
         await fillValidForm();
 
 
-        getById(
-          "newJoinerForm"
-        ).dispatchEvent(
-          new Event(
-            "submit",
-            {
-              bubbles:
-                true,
-
-              cancelable:
-                true
-            }
-          )
-        );
+        openSubmitConfirmation();
 
 
         getById(
@@ -1756,21 +1740,10 @@ describe(
         );
 
 
-        const postCalls =
-          fetchMock.mock.calls.filter(
-            (
-              [
-                ,
-                options
-              ]
-            ) =>
-              options?.method ===
-              "POST"
-          );
-
-
         expect(
-          postCalls
+          getPostCalls(
+            fetchMock
+          )
         ).toHaveLength(
           0
         );
@@ -1779,19 +1752,9 @@ describe(
     );
 
 
-    /* ==================================================
-       TEST 13
-       SUCCESSFUL SUBMISSION
-       ================================================== */
-
     it(
       "membangun payload, mengirim sekali, lalu menampilkan halaman sukses",
       async () => {
-
-        /*
-         * Reboot supaya fetchMock test ini
-         * bisa kita inspect.
-         */
 
         const {
           fetchMock
@@ -1802,43 +1765,9 @@ describe(
         await fillValidForm();
 
 
-        const form =
-          getById(
-            "newJoinerForm"
-          );
+        openSubmitConfirmation();
 
 
-        form.dispatchEvent(
-          new Event(
-            "submit",
-            {
-              bubbles:
-                true,
-
-              cancelable:
-                true
-            }
-          )
-        );
-
-
-        expect(
-          getById(
-            "submitConfirmModal"
-          ).classList.contains(
-            "is-hidden"
-          )
-        ).toBe(
-          false
-        );
-
-
-        /*
-         * Klik 2x sengaja.
-         *
-         * Frontend harus tetap hanya mengirim
-         * satu POST karena isSubmitting.
-         */
 
         getById(
           "confirmSubmitButton"
@@ -1853,21 +1782,10 @@ describe(
         await waitUntil(
           () => {
 
-            const postCalls =
-              fetchMock.mock.calls.filter(
-                (
-                  [
-                    ,
-                    options
-                  ]
-                ) =>
-                  options?.method ===
-                  "POST"
-              );
-
-
             expect(
-              postCalls
+              getPostCalls(
+                fetchMock
+              )
             ).toHaveLength(
               1
             );
@@ -1876,40 +1794,11 @@ describe(
         );
 
 
-        const postCall =
-          fetchMock.mock.calls.find(
-            (
-              [
-                ,
-                options
-              ]
-            ) =>
-              options?.method ===
-              "POST"
-          );
-
-
-        expect(
-          postCall
-        ).toBeDefined();
-
-
-        const [
-          ,
-          requestOptions
-        ] =
-          postCall;
-
-
         const payload =
-          JSON.parse(
-            requestOptions.body
+          getPostPayload(
+            fetchMock
           );
 
-
-        /*
-         * Test core field values.
-         */
 
         expect(
           payload.NamaDepan
@@ -1939,11 +1828,6 @@ describe(
         );
 
 
-        /*
-         * Karena toggle alamat sama dengan KTP = YA,
-         * payload domicile harus ikut KTP.
-         */
-
         expect(
           payload.AlamatSamaDenganKTP
         ).toBe(
@@ -1965,10 +1849,6 @@ describe(
         );
 
 
-        /*
-         * Partner dan children default TIDAK.
-         */
-
         expect(
           payload.MemilikiPasangan
         ).toBe(
@@ -1983,17 +1863,6 @@ describe(
         );
 
 
-        /*
-         * Required file attachments:
-         *
-         * KTP
-         * KK
-         * NPWP
-         * Buku Tabungan
-         * Ijazah
-         * Signed Offer
-         */
-
         expect(
           payload.attachments
         ).toHaveLength(
@@ -2003,8 +1872,8 @@ describe(
 
         expect(
           payload.attachments.map(
-            (attachment) =>
-              attachment.fieldName
+            (item) =>
+              item.fieldName
           )
         ).toEqual(
           expect.arrayContaining(
@@ -2019,13 +1888,6 @@ describe(
           )
         );
 
-
-        /*
-         * Content harus raw Base64.
-         * Tidak boleh ada:
-         *
-         * data:application/pdf;base64,...
-         */
 
         payload.attachments.forEach(
           (attachment) => {
@@ -2058,10 +1920,6 @@ describe(
           payload.timestamp
         ).toBeTruthy();
 
-
-        /*
-         * Success page.
-         */
 
         await waitUntil(
           () => {
@@ -2100,16 +1958,458 @@ describe(
         );
 
 
-        /*
-         * Karena test berjalan di localhost,
-         * production submission lock TIDAK disimpan.
-         */
 
         expect(
           localStorage.getItem(
             "linkajaNewJoinerSubmitted"
           )
         ).toBeNull();
+
+      }
+    );
+
+
+
+    it.each(
+      [
+        400,
+        500
+      ]
+    )(
+      "tetap membuka form untuk retry jika backend mengembalikan HTTP %s",
+      async (
+        status
+      ) => {
+
+        const {
+          fetchMock
+        } =
+          await bootFrontend({
+
+            backendMode:
+              "httpError",
+
+
+            httpStatus:
+              status,
+
+
+            suppressConsoleError:
+              true
+
+          });
+
+
+        await fillValidForm();
+
+
+        openSubmitConfirmation();
+
+
+        getById(
+          "confirmSubmitButton"
+        ).click();
+
+
+        await waitUntil(
+          () => {
+
+            expect(
+              getPostCalls(
+                fetchMock
+              )
+            ).toHaveLength(
+              1
+            );
+
+
+            expect(
+              getById(
+                "confirmSubmitButton"
+              ).disabled
+            ).toBe(
+              false
+            );
+
+          }
+        );
+
+
+        expect(
+          getById(
+            "submissionSuccess"
+          ).classList.contains(
+            "is-hidden"
+          )
+        ).toBe(
+          true
+        );
+
+
+        expect(
+          getById(
+            "newJoinerForm"
+          ).classList.contains(
+            "is-hidden"
+          )
+        ).toBe(
+          false
+        );
+
+
+        expect(
+          getVisiblePage()
+            ?.dataset
+            .formPage
+        ).toBe(
+          "4"
+        );
+
+
+        expect(
+          getById(
+            "submitButton"
+          ).disabled
+        ).toBe(
+          false
+        );
+
+      }
+    );
+
+    it(
+      "tetap membuka form untuk retry jika fetch backend reject karena network error",
+      async () => {
+
+        const {
+          fetchMock
+        } =
+          await bootFrontend({
+
+            backendMode:
+              "networkError",
+
+
+            suppressConsoleError:
+              true
+
+          });
+
+
+        await fillValidForm();
+
+
+        openSubmitConfirmation();
+
+
+        getById(
+          "confirmSubmitButton"
+        ).click();
+
+
+        await waitUntil(
+          () => {
+
+            expect(
+              getPostCalls(
+                fetchMock
+              )
+            ).toHaveLength(
+              1
+            );
+
+
+            expect(
+              getById(
+                "confirmSubmitButton"
+              ).disabled
+            ).toBe(
+              false
+            );
+
+          }
+        );
+
+
+        expect(
+          getById(
+            "submissionSuccess"
+          ).classList.contains(
+            "is-hidden"
+          )
+        ).toBe(
+          true
+        );
+
+
+        expect(
+          getById(
+            "newJoinerForm"
+          ).classList.contains(
+            "is-hidden"
+          )
+        ).toBe(
+          false
+        );
+
+
+        expect(
+          getVisiblePage()
+            ?.dataset
+            .formPage
+        ).toBe(
+          "4"
+        );
+
+      }
+    );
+
+
+
+    it(
+      "tetap sukses jika response backend 200 tetapi body bukan JSON",
+      async () => {
+
+        const {
+          fetchMock
+        } =
+          await bootFrontend({
+            backendMode:
+              "nonJson"
+          });
+
+
+        await fillValidForm();
+
+
+        openSubmitConfirmation();
+
+
+        getById(
+          "confirmSubmitButton"
+        ).click();
+
+
+        await waitUntil(
+          () => {
+
+            expect(
+              getPostCalls(
+                fetchMock
+              )
+            ).toHaveLength(
+              1
+            );
+
+
+            expect(
+              getById(
+                "submissionSuccess"
+              ).classList.contains(
+                "is-hidden"
+              )
+            ).toBe(
+              false
+            );
+
+          }
+        );
+
+      }
+    );
+
+
+
+    it(
+      "mengabaikan stale localStorage lock saat berjalan di localhost development",
+      async () => {
+
+        await bootFrontend();
+
+
+        localStorage.setItem(
+          "linkajaNewJoinerSubmitted",
+          "true"
+        );
+
+
+        localStorage.setItem(
+          "linkajaNewJoinerSubmissionId",
+          "NJ-OLD-TEST"
+        );
+
+
+        window.dispatchEvent(
+          new Event(
+            "pageshow"
+          )
+        );
+
+
+        window.dispatchEvent(
+          new Event(
+            "popstate"
+          )
+        );
+
+
+        expect(
+          getById(
+            "submissionSuccess"
+          ).classList.contains(
+            "is-hidden"
+          )
+        ).toBe(
+          true
+        );
+
+
+        expect(
+          getById(
+            "newJoinerForm"
+          ).classList.contains(
+            "is-hidden"
+          )
+        ).toBe(
+          false
+        );
+
+
+        expect(
+          getVisiblePage()
+            ?.dataset
+            .formPage
+        ).toBe(
+          "1"
+        );
+
+      }
+    );
+
+
+
+    it(
+      "menggunakan fallback submission ID jika crypto.randomUUID tidak tersedia",
+      async () => {
+
+        const {
+          fetchMock
+        } =
+          await bootFrontend();
+
+
+        await fillValidForm();
+
+
+        const originalDescriptor =
+          Object.getOwnPropertyDescriptor(
+            window.crypto,
+            "randomUUID"
+          );
+
+
+  
+
+        Object.defineProperty(
+          window.crypto,
+          "randomUUID",
+          {
+            configurable:
+              true,
+
+            value:
+              undefined
+          }
+        );
+
+
+        try {
+
+          openSubmitConfirmation();
+
+
+          getById(
+            "confirmSubmitButton"
+          ).click();
+
+
+          await waitUntil(
+            () => {
+
+              expect(
+                getPostCalls(
+                  fetchMock
+                )
+              ).toHaveLength(
+                1
+              );
+
+            }
+          );
+
+
+          const payload =
+            getPostPayload(
+              fetchMock
+            );
+
+
+          expect(
+            payload.submissionId
+          ).toMatch(
+            /^NJ-\d+-[A-Z0-9]+$/
+          );
+
+
+        } finally {
+
+          if (
+            originalDescriptor
+          ) {
+
+            Object.defineProperty(
+              window.crypto,
+              "randomUUID",
+              originalDescriptor
+            );
+
+          } else {
+
+            delete window.crypto.randomUUID;
+
+          }
+
+        }
+
+      }
+    );
+
+
+
+    it(
+      "radio LokasiKerja dapat dipilih normal setelah data halaman 4 diisi",
+      async () => {
+
+        await bootFrontend();
+
+
+        checkRadio(
+          "LokasiKerja",
+          "Yogyakarta"
+        );
+
+
+        const selected =
+          document.querySelector(
+            'input[name="LokasiKerja"]:checked'
+          );
+
+
+        expect(
+          selected?.value
+        ).toBe(
+          "Yogyakarta"
+        );
 
       }
     );

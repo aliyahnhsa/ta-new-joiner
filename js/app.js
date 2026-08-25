@@ -1,11 +1,6 @@
 (() => {
   "use strict";
 
-
-  /* ======================================================
-     CONFIGURATION
-     ====================================================== */
-
   const POWER_AUTOMATE_URL =
     "https://defaultce2a22364fea4cc9841385fac29c93.67.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/16/workflows/6e6642cbf1a24c0d9d53c15f7803c3a2/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=y4I6h7WdbNoXOF3VVWZA0g8RbBlZtn3CgM8PYMQaP48";
 
@@ -13,27 +8,6 @@
   const MAX_FILE_SIZE =
     5 * 1024 * 1024;
 
-
-  /*
-   * Development mode:
-   *
-   * Di localhost, hasil submit TIDAK disimpan
-   * sebagai permanent submission lock.
-   *
-   * Jadi:
-   *
-   * submit
-   * → success page
-   * → refresh
-   * → form muncul lagi
-   *
-   * Production:
-   *
-   * submit
-   * → success
-   * → refresh
-   * → tetap success
-   */
 
   const DEVELOPMENT_HOSTS = [
     "localhost",
@@ -55,11 +29,6 @@
 
   const SUBMISSION_ID_STORAGE_KEY =
     "linkajaNewJoinerSubmissionId";
-
-
-  /* ======================================================
-     FALLBACK ORGANIZATION DATA
-     ====================================================== */
 
   const DEFAULT_ORGANIZATION = [
 
@@ -221,11 +190,6 @@
 
   ];
 
-
-  /* ======================================================
-     ELEMENT REFERENCES
-     ====================================================== */
-
   const form =
     document.getElementById(
       "newJoinerForm"
@@ -343,11 +307,6 @@
 
   }
 
-
-  /* ======================================================
-     STORAGE HELPERS
-     ====================================================== */
-
   function storageGet(key) {
 
     try {
@@ -379,10 +338,6 @@
 
     } catch {
 
-      /*
-       * Ignore storage error.
-       */
-
     }
 
   }
@@ -390,9 +345,6 @@
 
   function hasAlreadySubmitted() {
 
-    /*
-     * Localhost sengaja tidak dikunci.
-     */
 
     if (
       IS_DEVELOPMENT
@@ -416,10 +368,6 @@
     submissionId
   ) {
 
-    /*
-     * Jangan simpan lock ketika development.
-     */
-
     if (
       IS_DEVELOPMENT
     ) {
@@ -441,11 +389,6 @@
     );
 
   }
-
-
-  /* ======================================================
-     SUCCESS STATE
-     ====================================================== */
 
   function showSubmissionSuccess(
     submissionId
@@ -472,14 +415,6 @@
     successSubmissionId.textContent =
       submissionId || "-";
 
-
-    /*
-     * Tidak membuat history baru.
-     *
-     * Jadi tombol browser Back tidak akan
-     * membawa user kembali ke page 4/3/2.
-     */
-
     try {
 
       history.replaceState(
@@ -491,10 +426,6 @@
       );
 
     } catch {
-
-      /*
-       * Ignore.
-       */
 
     }
 
@@ -509,10 +440,6 @@
 
 
   function restoreSubmittedState() {
-
-    /*
-     * Development selalu boleh mulai ulang.
-     */
 
     if (
       IS_DEVELOPMENT
@@ -551,14 +478,6 @@
   window.addEventListener(
     "pageshow",
     () => {
-
-      /*
-       * Production:
-       * pastikan form tidak muncul kembali lewat browser cache.
-       *
-       * Development:
-       * tidak melakukan apa-apa.
-       */
 
       if (
         !IS_DEVELOPMENT
@@ -608,11 +527,6 @@
 
     }
   );
-
-
-  /* ======================================================
-     INDONESIA REGION DATA
-     ====================================================== */
 
   const regionRows =
     Array.isArray(
@@ -1109,11 +1023,6 @@
 
   }
 
-
-  /* ======================================================
-     PAGE NAVIGATION
-     ====================================================== */
-
   function clearStatuses() {
 
     Object.values(
@@ -1311,10 +1220,6 @@
     );
 
 
-  /* ======================================================
-     TOGGLE HELPERS
-     ====================================================== */
-
   function updateToggleText(
     toggleId
   ) {
@@ -1384,11 +1289,6 @@
       );
 
   }
-
-
-  /* ======================================================
-     DOMICILE
-     ====================================================== */
 
   const sameAsKtpToggle =
     getElement(
@@ -1487,11 +1387,6 @@
     updateDomicile
   );
 
-
-  /* ======================================================
-     PARTNER
-     ====================================================== */
-
   const partnerToggle =
     getElement(
       "memilikiPasangan"
@@ -1565,11 +1460,6 @@
     "change",
     updatePartner
   );
-
-
-  /* ======================================================
-     CHILDREN
-     ====================================================== */
 
   const childrenToggle =
     getElement(
@@ -1824,11 +1714,6 @@
 
   }
 
-
-  /* ======================================================
-     OTHER BANK
-     ====================================================== */
-
   const bankSelect =
     getElement(
       "namaBank"
@@ -1894,11 +1779,6 @@
     "change",
     updateOtherBank
   );
-
-
-  /* ======================================================
-     CSV
-     ====================================================== */
 
   function parseCsvLine(
     line
@@ -2122,11 +2002,6 @@
     }
 
   }
-
-
-  /* ======================================================
-     ORGANIZATION
-     ====================================================== */
 
   const directorateSelect =
     getElement(
@@ -2485,11 +2360,6 @@
     );
 
   }
-
-
-  /* ======================================================
-     FILE UPLOAD
-     ====================================================== */
 
   function getUploadElements(
     input
@@ -2907,10 +2777,6 @@
 
             } catch {
 
-              /*
-               * Ignore browser limitation.
-               */
-
             }
 
           }
@@ -2953,11 +2819,6 @@
 
       }
     );
-
-
-  /* ======================================================
-     NUMERIC INPUT
-     ====================================================== */
 
   function setupNumericInput(
     elementId,
@@ -3103,11 +2964,6 @@
     }
   );
 
-
-  /* ======================================================
-     ERROR UI
-     ====================================================== */
-
   function removeFieldError(
     field
   ) {
@@ -3252,11 +3108,6 @@
     }
 
   }
-
-
-  /* ======================================================
-     VALIDATION
-     ====================================================== */
 
   function validatePage(
     pageNumber
@@ -3606,11 +3457,6 @@
 
   }
 
-
-  /* ======================================================
-     SUBMISSION ID
-     ====================================================== */
-
   function createSubmissionId() {
 
     if (
@@ -3640,11 +3486,6 @@
     );
 
   }
-
-
-  /* ======================================================
-     FILE -> BASE64
-     ====================================================== */
 
   function fileToBase64(
     file
@@ -3721,11 +3562,6 @@
     );
 
   }
-
-
-  /* ======================================================
-     BUILD FORM DATA
-     ====================================================== */
 
   function buildFieldPayload() {
 
@@ -3913,11 +3749,6 @@
 
   }
 
-
-  /* ======================================================
-     ATTACHMENTS
-     ====================================================== */
-
   async function buildAttachmentsPayload() {
 
     const fileInputs =
@@ -4005,11 +3836,6 @@
     };
 
   }
-
-
-  /* ======================================================
-     POWER AUTOMATE
-     ====================================================== */
 
   function isPowerAutomateConfigured() {
 
@@ -4123,11 +3949,6 @@
 
   }
 
-
-  /* ======================================================
-     SUBMIT PROGRESS
-     ====================================================== */
-
   function setSubmitting(
     submitting,
     message = ""
@@ -4153,11 +3974,6 @@
     }
 
   }
-
-
-  /* ======================================================
-     CONFIRMATION MODAL
-     ====================================================== */
 
   function openSubmitConfirmation() {
 
@@ -4277,11 +4093,6 @@
     }
   );
 
-
-  /* ======================================================
-     FIRST SUBMIT
-     ====================================================== */
-
   form.addEventListener(
     "submit",
     (event) => {
@@ -4323,11 +4134,6 @@
 
     }
   );
-
-
-  /* ======================================================
-     CONFIRMED SUBMIT
-     ====================================================== */
 
   confirmSubmitButton.addEventListener(
     "click",
@@ -4389,10 +4195,6 @@
 
       try {
 
-        /* ==============================================
-           BUILD JSON + BASE64
-           ============================================== */
-
         setSubmitting(
           true,
           "Menyiapkan data dan dokumen..."
@@ -4401,11 +4203,6 @@
 
         const payload =
           await buildPowerAutomatePayload();
-
-
-        /* ==============================================
-           CHECK ENDPOINT
-           ============================================== */
 
         if (
           !isPowerAutomateConfigured()
@@ -4417,11 +4214,6 @@
 
         }
 
-
-        /* ==============================================
-           SEND TO POWER AUTOMATE
-           ============================================== */
-
         setSubmitting(
           true,
           "Mengirim data..."
@@ -4432,19 +4224,9 @@
           payload
         );
 
-
-        /* ==============================================
-           PRODUCTION LOCK
-           ============================================== */
-
         markSubmissionCompleted(
           payload.submissionId
         );
-
-
-        /* ==============================================
-           CLEAR FORM
-           ============================================== */
 
         form.reset();
 
@@ -4471,11 +4253,6 @@
 
         isSubmitting =
           false;
-
-
-        /* ==============================================
-           SUCCESS PAGE
-           ============================================== */
 
         showSubmissionSuccess(
           payload.submissionId
@@ -4546,11 +4323,6 @@
     }
   );
 
-
-  /* ======================================================
-     INITIALIZATION
-     ====================================================== */
-
   bindRegionListeners(
     locationGroups.ktp
   );
@@ -4588,12 +4360,6 @@
     );
 
   }
-
-
-  /*
-   * Development indicator hanya di console.
-   * Tidak muncul di UI.
-   */
 
   if (
     IS_DEVELOPMENT
