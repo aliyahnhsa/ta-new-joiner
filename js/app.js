@@ -7,7 +7,7 @@
      ====================================================== */
 
   const POWER_AUTOMATE_URL =
-    "PASTE_HTTP_URL_POWER_AUTOMATE_KAMU_DI_SINI";
+    "https://defaultce2a22364fea4cc9841385fac29c93.67.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/16/workflows/6e6642cbf1a24c0d9d53c15f7803c3a2/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=y4I6h7WdbNoXOF3VVWZA0g8RbBlZtn3CgM8PYMQaP48";
 
 
   const MAX_FILE_SIZE =
