@@ -8,6 +8,7 @@
   --red: #e31b2d;
   --red-bright: #f13b4b;
   --red-dark: #bb1020;
+
   --red-soft: #fff1f3;
   --red-lighter: #fff8f9;
 
@@ -32,6 +33,11 @@
       var(--red-dark) 100%
     );
 }
+
+
+/* ======================================================
+   GLOBAL
+   ====================================================== */
 
 html {
   min-height: 100%;
@@ -78,9 +84,10 @@ button {
   display: none !important;
 }
 
-/* ==================================================
+
+/* ======================================================
    HEADER
-   ================================================== */
+   ====================================================== */
 
 .site-header {
   position: static;
@@ -172,9 +179,10 @@ button {
   letter-spacing: 0.45px;
 }
 
-/* ==================================================
+
+/* ======================================================
    PAGE
-   ================================================== */
+   ====================================================== */
 
 .page-shell {
   width: 100%;
@@ -206,9 +214,10 @@ button {
     0 14px 40px rgba(51, 32, 36, 0.08);
 }
 
-/* ==================================================
+
+/* ======================================================
    STEPPER
-   ================================================== */
+   ====================================================== */
 
 .stepper {
   display: grid;
@@ -238,6 +247,7 @@ button {
   content: "";
 
   position: absolute;
+
   top: 15px;
   left: 50%;
   z-index: 0;
@@ -246,9 +256,6 @@ button {
   height: 2px;
 
   background: #eadfe1;
-
-  transition:
-    background-color 0.2s ease;
 }
 
 .step.is-complete:not(:last-child)::after {
@@ -289,9 +296,12 @@ button {
 
 .step.is-active .step-number {
   color: #ffffff;
-  background: var(--primary-gradient);
 
-  border-color: var(--red);
+  background:
+    var(--primary-gradient);
+
+  border-color:
+    var(--red);
 
   box-shadow:
     0 0 0 5px #ffffff,
@@ -300,14 +310,18 @@ button {
 
 .step.is-complete .step-number {
   color: #ffffff;
-  background: var(--red);
 
-  border-color: var(--red);
+  background:
+    var(--red);
+
+  border-color:
+    var(--red);
 }
 
-/* ==================================================
+
+/* ======================================================
    FORM PAGE
-   ================================================== */
+   ====================================================== */
 
 .form-page {
   display: none;
@@ -321,20 +335,27 @@ button {
 }
 
 @keyframes page-enter {
+
   from {
     opacity: 0;
-    transform: translateY(4px);
+
+    transform:
+      translateY(4px);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
+
+    transform:
+      translateY(0);
   }
+
 }
 
-/* ==================================================
+
+/* ======================================================
    INTRO
-   ================================================== */
+   ====================================================== */
 
 .intro-copy {
   position: relative;
@@ -417,15 +438,18 @@ button {
 
 .document-list li::marker {
   color: var(--red);
+
   font-weight: 700;
 }
 
-/* ==================================================
-   HEADINGS AND SECTIONS
-   ================================================== */
+
+/* ======================================================
+   PAGE HEADING
+   ====================================================== */
 
 .page-heading {
   margin-bottom: 15px;
+
   padding-bottom: 11px;
 
   border-bottom:
@@ -445,6 +469,11 @@ button {
 
   font-size: 11px;
 }
+
+
+/* ======================================================
+   FORM SECTION
+   ====================================================== */
 
 .form-section {
   position: relative;
@@ -467,6 +496,7 @@ button {
   position: relative;
 
   margin-bottom: 12px;
+
   padding-left: 10px;
 
   font-size: 13px;
@@ -501,12 +531,14 @@ button {
   margin-bottom: 12px;
 }
 
-/* ==================================================
+
+/* ======================================================
    GRID
-   ================================================== */
+   ====================================================== */
 
 .grid {
   display: grid;
+
   gap: 14px;
 }
 
@@ -525,9 +557,10 @@ button {
     repeat(4, minmax(0, 1fr));
 }
 
-/* ==================================================
-   FIELDS
-   ================================================== */
+
+/* ======================================================
+   FIELD
+   ====================================================== */
 
 .field,
 .upload-field {
@@ -586,12 +619,15 @@ button {
     8px 11px;
 
   color: var(--text);
-  background-color: #ffffff;
+
+  background-color:
+    #ffffff;
 
   border:
     1px solid var(--border);
 
-  border-radius: 7px;
+  border-radius:
+    7px;
 
   outline: none;
 
@@ -613,7 +649,8 @@ button {
 
 .field input:focus,
 .field select:focus {
-  border-color: var(--red);
+  border-color:
+    var(--red);
 
   box-shadow:
     0 0 0 3px rgba(227, 27, 45, 0.09);
@@ -622,11 +659,15 @@ button {
 .field input:disabled,
 .field select:disabled {
   color: #9a9ea7;
-  background-color: #f2f2f4;
 
-  border-color: #e1e2e6;
+  background-color:
+    #f2f2f4;
 
-  cursor: not-allowed;
+  border-color:
+    #e1e2e6;
+
+  cursor:
+    not-allowed;
 }
 
 .field select {
@@ -638,12 +679,17 @@ button {
   background-image:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236b6e76' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
 
-  background-repeat: no-repeat;
+  background-repeat:
+    no-repeat;
+
   background-position:
     right 10px center;
-  background-size: 13px;
 
-  cursor: pointer;
+  background-size:
+    13px;
+
+  cursor:
+    pointer;
 }
 
 .field-error {
@@ -657,9 +703,10 @@ button {
     0 0 0 3px rgba(201, 35, 50, 0.08) !important;
 }
 
-/* ==================================================
+
+/* ======================================================
    RADIO
-   ================================================== */
+   ====================================================== */
 
 fieldset.field {
   min-width: 0;
@@ -689,25 +736,35 @@ fieldset.field {
   padding:
     8px 10px;
 
-  color: var(--text-secondary);
-  background: #ffffff;
+  color:
+    var(--text-secondary);
+
+  background:
+    #ffffff;
 
   border:
     1px solid var(--border);
 
-  border-radius: 7px;
+  border-radius:
+    7px;
 
-  font-weight: 500 !important;
+  font-weight:
+    500 !important;
 
-  cursor: pointer;
+  cursor:
+    pointer;
 }
 
 .radio:hover,
 .radio:focus-within {
-  color: #b00f20;
-  background: var(--red-soft);
+  color:
+    #b00f20;
 
-  border-color: var(--red);
+  background:
+    var(--red-soft);
+
+  border-color:
+    var(--red);
 }
 
 .radio input {
@@ -718,12 +775,16 @@ fieldset.field {
 
   margin: 0;
 
-  accent-color: var(--red);
+  accent-color:
+    var(--red);
 }
 
 .radio input:checked + span {
-  color: #b00f20;
-  font-weight: 650;
+  color:
+    #b00f20;
+
+  font-weight:
+    650;
 }
 
 .radio-row.field-error {
@@ -732,12 +793,14 @@ fieldset.field {
   border:
     1px solid var(--error);
 
-  border-radius: 8px;
+  border-radius:
+    8px;
 }
 
-/* ==================================================
+
+/* ======================================================
    TOGGLE
-   ================================================== */
+   ====================================================== */
 
 .switch {
   position: relative;
@@ -794,7 +857,8 @@ fieldset.field {
       #9da1a9 100%
     );
 
-  border-radius: 50%;
+  border-radius:
+    50%;
 
   box-shadow:
     0 2px 5px rgba(38, 40, 47, 0.2);
@@ -805,6 +869,7 @@ fieldset.field {
 
 .switch em {
   position: absolute;
+
   left: 32px;
 
   color: #555555;
@@ -826,7 +891,8 @@ fieldset.field {
 }
 
 .switch input:checked + .track i {
-  background: #ffffff;
+  background:
+    #ffffff;
 
   transform:
     translateX(46px);
@@ -835,12 +901,14 @@ fieldset.field {
 .switch input:checked ~ em {
   left: 10px;
 
-  color: #ffffff;
+  color:
+    #ffffff;
 }
 
-/* ==================================================
+
+/* ======================================================
    CARDS
-   ================================================== */
+   ====================================================== */
 
 .plain-card,
 .child-card {
@@ -848,26 +916,33 @@ fieldset.field {
 
   padding: 13px;
 
-  background: #ffffff;
+  background:
+    #ffffff;
 
   border:
     1px solid #eee2e4;
 
-  border-radius: 9px;
+  border-radius:
+    9px;
 }
 
 .child-card h4 {
   margin-bottom: 10px;
 
-  color: #b00f20;
+  color:
+    #b00f20;
 
-  font-size: 12px;
-  font-weight: 700;
+  font-size:
+    12px;
+
+  font-weight:
+    700;
 }
 
-/* ==================================================
+
+/* ======================================================
    FILE UPLOAD
-   ================================================== */
+   ====================================================== */
 
 .file-input {
   position: absolute;
@@ -876,6 +951,7 @@ fieldset.field {
   height: 1px;
 
   opacity: 0;
+
   pointer-events: none;
 }
 
@@ -901,15 +977,20 @@ fieldset.field {
 
   padding: 6px;
 
-  color: var(--text-secondary);
-  background: #fafafa;
+  color:
+    var(--text-secondary);
+
+  background:
+    #fafafa;
 
   border:
     1px dashed #cfd2d8;
 
-  border-radius: 7px;
+  border-radius:
+    7px;
 
-  cursor: pointer;
+  cursor:
+    pointer;
 
   transition:
     border-color 0.18s ease,
@@ -919,9 +1000,11 @@ fieldset.field {
 
 .upload-box:hover,
 .upload-box.is-dragging {
-  background: var(--red-lighter);
+  background:
+    var(--red-lighter);
 
-  border-color: var(--red);
+  border-color:
+    var(--red);
 
   box-shadow:
     0 0 0 3px rgba(227, 27, 45, 0.06);
@@ -933,16 +1016,23 @@ fieldset.field {
   padding:
     7px 11px;
 
-  color: #b00f20;
-  background: var(--red-soft);
+  color:
+    #b00f20;
+
+  background:
+    var(--red-soft);
 
   border:
     1px solid #f0cdd2;
 
-  border-radius: 6px;
+  border-radius:
+    6px;
 
-  font-size: 11px;
-  font-weight: 650;
+  font-size:
+    11px;
+
+  font-weight:
+    650;
 }
 
 .upload-box i {
@@ -950,13 +1040,20 @@ fieldset.field {
 
   overflow: hidden;
 
-  color: #747983;
+  color:
+    #747983;
 
-  font-size: 11px;
-  font-style: normal;
+  font-size:
+    11px;
 
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  font-style:
+    normal;
+
+  text-overflow:
+    ellipsis;
+
+  white-space:
+    nowrap;
 }
 
 .remove-file-button {
@@ -965,54 +1062,75 @@ fieldset.field {
   padding:
     7px 11px;
 
-  color: #b00f20;
-  background: #ffffff;
+  color:
+    #b00f20;
+
+  background:
+    #ffffff;
 
   border:
     1px solid #e7aeb6;
 
-  border-radius: 7px;
+  border-radius:
+    7px;
 
-  font-size: 10.5px;
-  font-weight: 650;
+  font-size:
+    10.5px;
 
-  cursor: pointer;
+  font-weight:
+    650;
 
-  transition:
-    background-color 0.18s ease,
-    border-color 0.18s ease;
+  cursor:
+    pointer;
 }
 
 .remove-file-button:hover {
-  background: var(--red-soft);
+  background:
+    var(--red-soft);
 
-  border-color: var(--red);
+  border-color:
+    var(--red);
 }
 
 .upload-field.has-file .upload-box {
-  background: #fffafa;
+  background:
+    #fffafa;
 
-  border-color: #eabac1;
-  border-style: solid;
+  border-color:
+    #eabac1;
+
+  border-style:
+    solid;
 }
 
 .upload-field.has-file .upload-box i {
-  color: var(--text);
-  font-weight: 600;
+  color:
+    var(--text);
+
+  font-weight:
+    600;
 }
 
 .upload-field.has-error .upload-box {
-  background: #fff8f9;
+  background:
+    #fff8f9;
 
-  border-color: var(--error);
+  border-color:
+    var(--error);
 
   box-shadow:
     0 0 0 3px rgba(201, 35, 50, 0.08);
 }
 
 .upload-field.has-error small {
-  color: var(--error);
+  color:
+    var(--error);
 }
+
+
+/* ======================================================
+   OPTIONAL LABEL
+   ====================================================== */
 
 mark {
   display: inline-flex;
@@ -1022,22 +1140,33 @@ mark {
   padding:
     2px 6px;
 
-  color: #666666;
-  background: #eeeeee;
+  color:
+    #666666;
 
-  border-radius: 99px;
+  background:
+    #eeeeee;
 
-  font-size: 9px;
-  font-weight: 650;
-  vertical-align: middle;
+  border-radius:
+    99px;
+
+  font-size:
+    9px;
+
+  font-weight:
+    650;
+
+  vertical-align:
+    middle;
 }
 
-/* ==================================================
+
+/* ======================================================
    SPECIAL SPACING
-   ================================================== */
+   ====================================================== */
 
 .bank-grid {
-  margin-bottom: 8px;
+  margin-bottom:
+    8px;
 }
 
 #otherBankField,
@@ -1047,16 +1176,19 @@ mark {
 }
 
 .bank-upload {
-  margin-top: 3px;
+  margin-top:
+    3px;
 }
 
 .offer-upload {
-  margin-bottom: 20px;
+  margin-bottom:
+    20px;
 }
 
-/* ==================================================
+
+/* ======================================================
    STATUS
-   ================================================== */
+   ====================================================== */
 
 .status {
   min-height: 16px;
@@ -1064,24 +1196,93 @@ mark {
   margin:
     5px 0 8px;
 
-  font-size: 11px;
+  font-size:
+    11px;
 }
 
 .status:empty {
-  display: none;
+  display:
+    none;
 }
 
 .status.is-error {
-  color: var(--error);
+  color:
+    var(--error);
 }
 
 .status.is-success {
-  color: var(--success);
+  color:
+    var(--success);
 }
 
-/* ==================================================
+
+/* ======================================================
+   SUBMIT PROGRESS
+   ====================================================== */
+
+.submit-progress {
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  margin:
+    8px 0 10px;
+
+  padding:
+    10px 12px;
+
+  color:
+    #7d101e;
+
+  background:
+    #fff7f8;
+
+  border:
+    1px solid #f0d0d5;
+
+  border-radius:
+    8px;
+
+  font-size:
+    11px;
+
+  font-weight:
+    600;
+}
+
+.submit-spinner {
+  width: 16px;
+  height: 16px;
+
+  flex-shrink: 0;
+
+  border:
+    2px solid #f0c5cc;
+
+  border-top-color:
+    var(--red);
+
+  border-radius:
+    50%;
+
+  animation:
+    submit-spin 0.7s linear infinite;
+}
+
+@keyframes submit-spin {
+
+  to {
+    transform:
+      rotate(360deg);
+  }
+
+}
+
+
+/* ======================================================
    BUTTONS
-   ================================================== */
+   ====================================================== */
 
 .page-actions {
   display: flex;
@@ -1091,11 +1292,13 @@ mark {
 }
 
 .page-actions.end {
-  justify-content: flex-end;
+  justify-content:
+    flex-end;
 }
 
 .page-actions.between {
-  justify-content: space-between;
+  justify-content:
+    space-between;
 }
 
 .btn {
@@ -1111,28 +1314,39 @@ mark {
     8px 17px;
 
   border: 0;
-  border-radius: 8px;
 
-  font-size: 12px;
-  font-weight: 650;
+  border-radius:
+    8px;
 
-  cursor: pointer;
+  font-size:
+    12px;
+
+  font-weight:
+    650;
+
+  cursor:
+    pointer;
 
   transition:
     transform 0.18s ease,
-    box-shadow 0.18s ease;
+    box-shadow 0.18s ease,
+    opacity 0.18s ease;
 }
 
 .btn.primary {
-  color: #ffffff;
-  background: var(--primary-gradient);
+  color:
+    #ffffff;
+
+  background:
+    var(--primary-gradient);
 
   box-shadow:
     0 7px 16px rgba(227, 27, 45, 0.22);
 }
 
 .btn.secondary {
-  color: #454851;
+  color:
+    #454851;
 
   background:
     linear-gradient(
@@ -1145,56 +1359,381 @@ mark {
     1px solid #dedee2;
 }
 
-.btn:hover {
+.btn:hover:not(:disabled) {
   transform:
     translateY(-1px);
 }
 
-/* ==================================================
+.btn:disabled {
+  opacity:
+    0.55;
+
+  cursor:
+    not-allowed;
+
+  transform:
+    none;
+}
+
+
+/* ======================================================
+   CONFIRMATION MODAL
+   ====================================================== */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background:
+    rgba(30, 20, 22, 0.52);
+
+  backdrop-filter:
+    blur(3px);
+}
+
+.confirm-modal {
+  width:
+    min(430px, 100%);
+
+  padding:
+    28px;
+
+  background:
+    #ffffff;
+
+  border:
+    1px solid #ecdadd;
+
+  border-radius:
+    14px;
+
+  box-shadow:
+    0 24px 70px rgba(32, 12, 16, 0.22);
+
+  text-align:
+    center;
+
+  animation:
+    modal-enter 0.18s ease;
+}
+
+@keyframes modal-enter {
+
+  from {
+    opacity: 0;
+
+    transform:
+      scale(0.97)
+      translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      scale(1)
+      translateY(0);
+  }
+
+}
+
+.confirm-icon {
+  width: 48px;
+  height: 48px;
+
+  display: grid;
+  place-items: center;
+
+  margin:
+    0 auto 15px;
+
+  color:
+    #ffffff;
+
+  background:
+    var(--primary-gradient);
+
+  border-radius:
+    50%;
+
+  box-shadow:
+    0 7px 18px rgba(227, 27, 45, 0.2);
+
+  font-size:
+    24px;
+
+  font-weight:
+    800;
+}
+
+.confirm-modal h3 {
+  margin-bottom:
+    9px;
+
+  font-size:
+    17px;
+}
+
+.confirm-modal p {
+  color:
+    var(--text-secondary);
+
+  font-size:
+    12px;
+
+  line-height:
+    1.55;
+}
+
+.confirm-warning {
+  margin-top:
+    8px;
+
+  color:
+    #a91322 !important;
+
+  font-weight:
+    600;
+}
+
+.confirm-actions {
+  display: flex;
+  justify-content: center;
+
+  gap: 10px;
+
+  margin-top:
+    22px;
+}
+
+
+/* ======================================================
+   SUCCESS PAGE
+   ====================================================== */
+
+.submission-success {
+  min-height:
+    500px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding:
+    55px 20px;
+
+  text-align:
+    center;
+
+  animation:
+    success-enter 0.3s ease;
+}
+
+@keyframes success-enter {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+
+}
+
+.success-icon {
+  width: 70px;
+  height: 70px;
+
+  display: grid;
+  place-items: center;
+
+  margin-bottom:
+    18px;
+
+  color:
+    #ffffff;
+
+  background:
+    var(--primary-gradient);
+
+  border-radius:
+    50%;
+
+  box-shadow:
+    0 12px 30px rgba(227, 27, 45, 0.24);
+
+  font-size:
+    34px;
+
+  font-weight:
+    700;
+}
+
+.submission-success h2 {
+  margin-bottom:
+    8px;
+
+  color:
+    var(--text);
+
+  font-size:
+    22px;
+
+  line-height:
+    1.25;
+}
+
+.success-description {
+  max-width:
+    520px;
+
+  color:
+    var(--text-secondary);
+
+  font-size:
+    13px;
+
+  line-height:
+    1.55;
+}
+
+.success-reference {
+  min-width:
+    300px;
+
+  margin-top:
+    24px;
+
+  padding:
+    14px 18px;
+
+  background:
+    #fff7f8;
+
+  border:
+    1px solid #efd5d9;
+
+  border-radius:
+    9px;
+}
+
+.success-reference span {
+  display: block;
+
+  margin-bottom:
+    4px;
+
+  color:
+    var(--muted);
+
+  font-size:
+    10px;
+
+  text-transform:
+    uppercase;
+
+  letter-spacing:
+    0.6px;
+}
+
+.success-reference strong {
+  color:
+    #a80d1c;
+
+  font-size:
+    12px;
+
+  word-break:
+    break-all;
+}
+
+.success-note {
+  margin-top:
+    17px;
+
+  color:
+    var(--muted);
+
+  font-size:
+    10.5px;
+}
+
+
+/* ======================================================
    RESPONSIVE
-   ================================================== */
+   ====================================================== */
 
 @media (max-width: 1100px) {
+
   .grid.four {
     grid-template-columns:
       repeat(2, minmax(0, 1fr));
   }
+
 }
 
+
 @media (max-width: 850px) {
+
   .grid.three {
     grid-template-columns:
       repeat(2, minmax(0, 1fr));
   }
 
   .document-list ol {
-    grid-template-columns: 1fr;
+    grid-template-columns:
+      1fr;
   }
+
 }
 
+
 @media (max-width: 650px) {
+
   .site-header {
-    height: 58px;
+    height:
+      58px;
   }
 
   .header-content {
     width:
       calc(100% - 20px);
 
-    gap: 11px;
+    gap:
+      11px;
   }
 
   .logo-wrapper {
-    width: 40px;
-    height: 40px;
+    width:
+      40px;
+
+    height:
+      40px;
   }
 
   .header-copy strong {
-    font-size: 14px;
+    font-size:
+      14px;
   }
 
   .header-copy span {
-    font-size: 9px;
+    font-size:
+      9px;
   }
 
   .page-shell {
@@ -1203,55 +1742,103 @@ mark {
   }
 
   .form-card {
-    min-height: 0;
+    min-height:
+      0;
 
     padding:
       20px 13px 22px;
 
-    border-radius: 12px;
+    border-radius:
+      12px;
   }
 
   .step-number {
-    width: 27px;
-    height: 27px;
+    width:
+      27px;
+
+    height:
+      27px;
 
     box-shadow:
       0 0 0 3px #ffffff;
   }
 
   .step:not(:last-child)::after {
-    top: 13px;
+    top:
+      13px;
   }
 
   .step {
-    font-size: 8.5px;
+    font-size:
+      8.5px;
   }
 
   .grid.two,
   .grid.three,
   .grid.four {
-    grid-template-columns: 1fr;
+    grid-template-columns:
+      1fr;
 
-    gap: 0;
+    gap:
+      0;
   }
 
   .plain-card,
   .child-card {
-    margin-bottom: 10px;
+    margin-bottom:
+      10px;
   }
 
   .section-head {
-    align-items: center;
+    align-items:
+      center;
   }
 
   .upload-control {
-    flex-direction: column;
+    flex-direction:
+      column;
 
-    gap: 6px;
+    gap:
+      6px;
   }
 
   .remove-file-button {
-    width: 100%;
-    min-height: 36px;
+    width:
+      100%;
+
+    min-height:
+      36px;
   }
+
+  .confirm-modal {
+    padding:
+      23px 18px;
+  }
+
+  .confirm-actions {
+    flex-direction:
+      column-reverse;
+  }
+
+  .confirm-actions .btn {
+    width:
+      100%;
+  }
+
+  .success-reference {
+    min-width:
+      0;
+
+    width:
+      100%;
+  }
+
+  .submission-success {
+    min-height:
+      420px;
+
+    padding:
+      40px 12px;
+  }
+
 }

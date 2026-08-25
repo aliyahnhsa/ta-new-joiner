@@ -2,13 +2,30 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Form New Joiner | LinkAja</title>
-  <link rel="stylesheet" href="css/style.css">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>New Joiner Form | LinkAja</title>
+
+  <link
+    rel="stylesheet"
+    href="css/style.css"
+  >
 </head>
+
 <body>
+
+  <!-- ======================================================
+       HEADER
+       ====================================================== -->
+
   <header class="site-header">
+
     <div class="header-content">
+
       <div class="logo-wrapper">
         <img
           src="assets/linkaja-logo.png"
@@ -18,63 +35,114 @@
       </div>
 
       <div class="header-copy">
-        <strong>New Joiner Form</strong>
-        <span>Employee Onboarding</span>
+
+        <strong>
+          New Joiner Form
+        </strong>
+
+        <span>
+          Employee Onboarding
+        </span>
+
       </div>
+
     </div>
+
   </header>
 
+
+  <!-- ======================================================
+       MAIN
+       ====================================================== -->
+
   <main class="page-shell">
+
     <section class="form-card">
-      <nav class="stepper" aria-label="Tahapan formulir">
-        <div class="step is-active" data-step-indicator="1">
+
+
+      <!-- ==================================================
+           STEPPER
+           ================================================== -->
+
+      <nav
+        id="formStepper"
+        class="stepper"
+        aria-label="Tahapan formulir"
+      >
+
+        <div
+          class="step is-active"
+          data-step-indicator="1"
+        >
           <span class="step-number">1</span>
           <span>Intro</span>
         </div>
 
-        <div class="step" data-step-indicator="2">
+        <div
+          class="step"
+          data-step-indicator="2"
+        >
           <span class="step-number">2</span>
           <span>Informasi Pribadi</span>
         </div>
 
-        <div class="step" data-step-indicator="3">
+        <div
+          class="step"
+          data-step-indicator="3"
+        >
           <span class="step-number">3</span>
           <span>Dokumen Pribadi</span>
         </div>
 
-        <div class="step" data-step-indicator="4">
+        <div
+          class="step"
+          data-step-indicator="4"
+        >
           <span class="step-number">4</span>
           <span>Informasi Administratif HR</span>
         </div>
+
       </nav>
 
-      <form id="newJoinerForm" novalidate>
+
+      <!-- ==================================================
+           FORM
+           ================================================== -->
+
+      <form
+        id="newJoinerForm"
+        novalidate
+      >
+
+
         <!-- ==================================================
-             PAGE 1 — INTRO
+             PAGE 1
+             INTRO
              ================================================== -->
+
         <section
           class="form-page is-visible"
           data-form-page="1"
         >
+
           <div class="intro-copy">
+
             <p>
               Selamat datang
               <strong>#OfficialLinkAja!</strong>
-
-              Pada sesi ini Anda diharapkan mengisi
-              informasi data pribadi secara lengkap.
+              Pada sesi ini Anda diharapkan mengisi informasi
+              data pribadi secara lengkap.
             </p>
 
             <p>
               Siapkan dokumen dalam bentuk
               <strong>.pdf</strong>
-
               dengan format
-
               <strong>Jenis Dokumen_Nama</strong>.
             </p>
 
             <div class="document-list">
+
               <strong>
                 Dokumen yang perlu disiapkan:
               </strong>
@@ -87,25 +155,26 @@
                 <li>NPWP</li>
 
                 <li>
-                  Buku Tabungan / Screenshot
-                  Nomor Rekening
+                  Buku Tabungan / Screenshot Nomor Rekening
                 </li>
 
                 <li>KTP Pasangan*</li>
                 <li>KTP / Akte Lahir Anak*</li>
                 <li>Signed Offer Proposal</li>
               </ol>
+
             </div>
 
             <p>
-              * jika ada. Ukuran maksimal setiap
-              dokumen adalah
-
+              * jika ada. Ukuran maksimal setiap dokumen adalah
               <strong>5 MB</strong>.
             </p>
+
           </div>
 
+
           <div class="page-actions end">
+
             <button
               type="button"
               class="btn primary"
@@ -114,30 +183,49 @@
               Next
               <span>›</span>
             </button>
+
           </div>
+
         </section>
 
+
         <!-- ==================================================
-             PAGE 2 — INFORMASI PRIBADI
+             PAGE 2
+             INFORMASI PRIBADI
              ================================================== -->
+
         <section
           class="form-page"
           data-form-page="2"
         >
+
           <div class="page-heading">
-            <h2>Informasi Pribadi</h2>
+
+            <h2>
+              Informasi Pribadi
+            </h2>
 
             <p>
               Lengkapi data sesuai dokumen resmi.
             </p>
+
           </div>
 
-          <!-- DATA IDENTITAS -->
+
+          <!-- ==============================================
+               DATA IDENTITAS
+               ============================================== -->
+
           <section class="form-section">
-            <h3>Data Identitas</h3>
+
+            <h3>
+              Data Identitas
+            </h3>
 
             <div class="grid three">
+
               <div class="field">
+
                 <label for="namaDepan">
                   Nama Depan
                   <b>*</b>
@@ -149,9 +237,11 @@
                   autocomplete="given-name"
                   required
                 >
+
               </div>
 
               <div class="field">
+
                 <label for="namaTengah">
                   Nama Tengah
                 </label>
@@ -161,9 +251,11 @@
                   name="NamaTengah"
                   autocomplete="additional-name"
                 >
+
               </div>
 
               <div class="field">
+
                 <label for="namaBelakang">
                   Nama Belakang
                   <b>*</b>
@@ -175,11 +267,16 @@
                   autocomplete="family-name"
                   required
                 >
+
               </div>
+
             </div>
 
+
             <div class="grid three">
+
               <div class="field">
+
                 <label for="kotaLahir">
                   Kota Lahir
                   <b>*</b>
@@ -190,16 +287,21 @@
                   name="KotaLahir"
                   required
                 >
+
               </div>
 
+
               <fieldset class="field">
+
                 <legend>
                   Jenis Kelamin
                   <b>*</b>
                 </legend>
 
                 <div class="radio-row">
+
                   <label class="radio">
+
                     <input
                       type="radio"
                       name="JenisKelamin"
@@ -207,10 +309,15 @@
                       required
                     >
 
-                    <span>Pria</span>
+                    <span>
+                      Pria
+                    </span>
+
                   </label>
 
+
                   <label class="radio">
+
                     <input
                       type="radio"
                       name="JenisKelamin"
@@ -218,12 +325,19 @@
                       required
                     >
 
-                    <span>Wanita</span>
+                    <span>
+                      Wanita
+                    </span>
+
                   </label>
+
                 </div>
+
               </fieldset>
 
+
               <div class="field">
+
                 <label for="tanggalLahir">
                   Tanggal Lahir
                   <b>*</b>
@@ -235,15 +349,26 @@
                   type="date"
                   required
                 >
+
               </div>
+
             </div>
+
           </section>
 
-          <!-- ALAMAT KTP -->
+
+          <!-- ==============================================
+               ALAMAT KTP
+               ============================================== -->
+
           <section class="form-section">
-            <h3>Alamat KTP</h3>
+
+            <h3>
+              Alamat KTP
+            </h3>
 
             <div class="field">
+
               <label for="alamatKtp">
                 Alamat Lengkap
                 <b>*</b>
@@ -256,10 +381,14 @@
                 placeholder="Nama jalan, nomor rumah, gedung, dan informasi lainnya"
                 required
               >
+
             </div>
 
+
             <div class="grid four">
+
               <div class="field">
+
                 <label for="provinsiKtp">
                   Provinsi
                   <b>*</b>
@@ -274,9 +403,12 @@
                     Pilih provinsi
                   </option>
                 </select>
+
               </div>
 
+
               <div class="field">
+
                 <label for="kotaKtp">
                   Kota / Kabupaten
                   <b>*</b>
@@ -292,9 +424,12 @@
                     Pilih provinsi dahulu
                   </option>
                 </select>
+
               </div>
 
+
               <div class="field">
+
                 <label for="kecamatanKtp">
                   Kecamatan
                   <b>*</b>
@@ -310,9 +445,12 @@
                     Pilih kota dahulu
                   </option>
                 </select>
+
               </div>
 
+
               <div class="field">
+
                 <label for="kelurahanKtp">
                   Kelurahan / Desa
                   <b>*</b>
@@ -328,11 +466,16 @@
                     Pilih kecamatan dahulu
                   </option>
                 </select>
+
               </div>
+
             </div>
 
+
             <div class="grid two">
+
               <div class="field">
+
                 <label for="rtRwKtp">
                   RT/RW
                   <b>*</b>
@@ -347,9 +490,12 @@
                   pattern="[0-9]{1,3}/[0-9]{1,3}"
                   required
                 >
+
               </div>
 
+
               <div class="field">
+
                 <label for="kodePosKtp">
                   Kode Pos
                   <b>*</b>
@@ -365,23 +511,37 @@
                   pattern="[0-9]{5}"
                   required
                 >
+
               </div>
+
             </div>
+
           </section>
 
-          <!-- ALAMAT DOMISILI -->
+
+          <!-- ==============================================
+               ALAMAT DOMISILI
+               ============================================== -->
+
           <section class="form-section">
+
             <div class="section-head">
+
               <div>
-                <h3>Alamat Domisili</h3>
+
+                <h3>
+                  Alamat Domisili
+                </h3>
 
                 <p>
-                  Aktifkan YA jika sama dengan
-                  alamat KTP.
+                  Aktifkan YA jika sama dengan alamat KTP.
                 </p>
+
               </div>
 
+
               <label class="switch">
+
                 <input
                   id="alamatSamaDenganKtp"
                   type="checkbox"
@@ -396,11 +556,16 @@
                 >
                   TIDAK
                 </em>
+
               </label>
+
             </div>
 
+
             <div id="domicileFields">
+
               <div class="field">
+
                 <label for="alamatDomisili">
                   Alamat Lengkap
                   <b>*</b>
@@ -411,10 +576,14 @@
                   name="AlamatDomisili"
                   required
                 >
+
               </div>
 
+
               <div class="grid four">
+
                 <div class="field">
+
                   <label for="provinsiDomisili">
                     Provinsi
                     <b>*</b>
@@ -429,9 +598,12 @@
                       Pilih provinsi
                     </option>
                   </select>
+
                 </div>
 
+
                 <div class="field">
+
                   <label for="kotaDomisili">
                     Kota / Kabupaten
                     <b>*</b>
@@ -447,9 +619,12 @@
                       Pilih provinsi dahulu
                     </option>
                   </select>
+
                 </div>
 
+
                 <div class="field">
+
                   <label for="kecamatanDomisili">
                     Kecamatan
                     <b>*</b>
@@ -465,9 +640,12 @@
                       Pilih kota dahulu
                     </option>
                   </select>
+
                 </div>
 
+
                 <div class="field">
+
                   <label for="kelurahanDomisili">
                     Kelurahan / Desa
                     <b>*</b>
@@ -483,11 +661,16 @@
                       Pilih kecamatan dahulu
                     </option>
                   </select>
+
                 </div>
+
               </div>
 
+
               <div class="grid two">
+
                 <div class="field">
+
                   <label for="rtRwDomisili">
                     RT/RW
                     <b>*</b>
@@ -502,9 +685,12 @@
                     pattern="[0-9]{1,3}/[0-9]{1,3}"
                     required
                   >
+
                 </div>
 
+
                 <div class="field">
+
                   <label for="kodePosDomisili">
                     Kode Pos
                     <b>*</b>
@@ -519,17 +705,31 @@
                     pattern="[0-9]{5}"
                     required
                   >
+
                 </div>
+
               </div>
+
             </div>
+
           </section>
 
-          <!-- INFORMASI KONTAK -->
+
+          <!-- ==============================================
+               INFORMASI KONTAK
+               ============================================== -->
+
           <section class="form-section">
-            <h3>Informasi Kontak</h3>
+
+            <h3>
+              Informasi Kontak
+            </h3>
+
 
             <div class="grid three">
+
               <div class="field">
+
                 <label for="nomorHandphone">
                   Nomor Handphone
                   <b>*</b>
@@ -545,9 +745,12 @@
                   pattern="08[0-9]{8,11}"
                   required
                 >
+
               </div>
 
+
               <div class="field">
+
                 <label for="nomorLinkAja">
                   Nomor Terdaftar di LinkAja
                   (Full Service)
@@ -563,9 +766,12 @@
                   pattern="08[0-9]{8,11}"
                   required
                 >
+
               </div>
 
+
               <div class="field">
+
                 <label for="emailPribadi">
                   Email Pribadi
                   <b>*</b>
@@ -579,11 +785,16 @@
                   placeholder="username@domain.com"
                   required
                 >
+
               </div>
+
             </div>
 
+
             <div class="grid three">
+
               <div class="field">
+
                 <label for="namaEmergencyContact">
                   Nama Emergency Contact
                   <b>*</b>
@@ -594,9 +805,12 @@
                   name="NamaEmergencyContact"
                   required
                 >
+
               </div>
 
+
               <div class="field">
+
                 <label for="hubunganEmergencyContact">
                   Hubungan Emergency Contact
                   <b>*</b>
@@ -607,6 +821,7 @@
                   name="HubunganEmergencyContact"
                   required
                 >
+
                   <option
                     value=""
                     selected
@@ -615,10 +830,21 @@
                     Pilih hubungan
                   </option>
 
-                  <option value="Ayah">Ayah</option>
-                  <option value="Ibu">Ibu</option>
-                  <option value="Pasangan">Pasangan</option>
-                  <option value="Anak">Anak</option>
+                  <option value="Ayah">
+                    Ayah
+                  </option>
+
+                  <option value="Ibu">
+                    Ibu
+                  </option>
+
+                  <option value="Pasangan">
+                    Pasangan
+                  </option>
+
+                  <option value="Anak">
+                    Anak
+                  </option>
 
                   <option value="Saudara Laki-Laki">
                     Saudara Laki-Laki
@@ -631,10 +857,14 @@
                   <option value="Kerabat Lainnya">
                     Kerabat Lainnya
                   </option>
+
                 </select>
+
               </div>
 
+
               <div class="field">
+
                 <label for="nomorEmergencyContact">
                   Nomor Handphone Emergency Contact
                   <b>*</b>
@@ -649,16 +879,22 @@
                   pattern="08[0-9]{8,11}"
                   required
                 >
+
               </div>
+
             </div>
+
           </section>
+
 
           <p
             id="pageTwoStatus"
             class="status"
           ></p>
 
+
           <div class="page-actions between">
+
             <button
               type="button"
               class="btn secondary"
@@ -674,32 +910,53 @@
             >
               Next ›
             </button>
+
           </div>
+
         </section>
 
+
         <!-- ==================================================
-             PAGE 3 — DOKUMEN PRIBADI
+             PAGE 3
+             DOKUMEN PRIBADI
              ================================================== -->
+
         <section
           class="form-page"
           data-form-page="3"
         >
+
           <div class="page-heading">
-            <h2>Dokumen Pribadi</h2>
+
+            <h2>
+              Dokumen Pribadi
+            </h2>
 
             <p>
-              Semua lampiran berupa PDF, satu file
-              per field, maksimal 5 MB.
+              Semua lampiran berupa PDF, satu file per field,
+              maksimal 5 MB.
             </p>
+
           </div>
 
-          <!-- DOKUMEN IDENTITAS -->
+
+          <!-- ==============================================
+               DOKUMEN IDENTITAS
+               ============================================== -->
+
           <section class="form-section">
-            <h3>Dokumen Identitas</h3>
+
+            <h3>
+              Dokumen Identitas
+            </h3>
+
 
             <div class="grid two">
+
               <article class="plain-card">
+
                 <div class="field">
+
                   <label for="nomorKtp">
                     Nomor KTP
                     <b>*</b>
@@ -714,19 +971,24 @@
                     placeholder="16 digit nomor KTP"
                     required
                   >
+
                 </div>
 
+
                 <div class="upload-field">
+
                   <label for="lampiranKtp">
                     Lampiran KTP
                     <b>*</b>
                   </label>
 
                   <div class="upload-control">
+
                     <label
                       class="upload-box"
                       for="lampiranKtp"
                     >
+
                       <input
                         id="lampiranKtp"
                         name="LampiranKTP"
@@ -743,6 +1005,7 @@
                       <i data-file-name>
                         Belum ada file
                       </i>
+
                     </label>
 
                     <button
@@ -753,6 +1016,7 @@
                     >
                       Hapus
                     </button>
+
                   </div>
 
                   <small
@@ -760,11 +1024,16 @@
                   >
                     Format: KTP_Nama.pdf • Maksimal 5 MB
                   </small>
+
                 </div>
+
               </article>
 
+
               <article class="plain-card">
+
                 <div class="field">
+
                   <label for="nomorKk">
                     Nomor Kartu Keluarga
                     <b>*</b>
@@ -779,19 +1048,24 @@
                     placeholder="16 digit nomor KK"
                     required
                   >
+
                 </div>
 
+
                 <div class="upload-field">
+
                   <label for="lampiranKk">
                     Lampiran Kartu Keluarga
                     <b>*</b>
                   </label>
 
                   <div class="upload-control">
+
                     <label
                       class="upload-box"
                       for="lampiranKk"
                     >
+
                       <input
                         id="lampiranKk"
                         name="LampiranKartuKeluarga"
@@ -808,7 +1082,9 @@
                       <i data-file-name>
                         Belum ada file
                       </i>
+
                     </label>
+
 
                     <button
                       type="button"
@@ -818,24 +1094,40 @@
                     >
                       Hapus
                     </button>
+
                   </div>
+
 
                   <small
                     data-default-text="Format: KartuKeluarga_Nama.pdf • Maksimal 5 MB"
                   >
                     Format: KartuKeluarga_Nama.pdf • Maksimal 5 MB
                   </small>
+
                 </div>
+
               </article>
+
             </div>
+
           </section>
 
-          <!-- INFORMASI PAJAK -->
+
+          <!-- ==============================================
+               INFORMASI PAJAK
+               ============================================== -->
+
           <section class="form-section">
-            <h3>Informasi Pajak</h3>
+
+            <h3>
+              Informasi Pajak
+            </h3>
+
 
             <div class="grid three">
+
               <div class="field">
+
                 <label for="nomorNpwp">
                   Nomor NPWP
                   <b>*</b>
@@ -854,9 +1146,12 @@
                 <small>
                   Isi 0 jika belum memiliki NPWP.
                 </small>
+
               </div>
 
+
               <div class="field">
+
                 <label for="statusPajak">
                   Status Pajak
                   <b>*</b>
@@ -867,6 +1162,7 @@
                   name="StatusPajak"
                   required
                 >
+
                   <option
                     value=""
                     selected
@@ -879,28 +1175,36 @@
                   <option value="TK/1">TK/1</option>
                   <option value="TK/2">TK/2</option>
                   <option value="TK/3">TK/3</option>
+
                   <option value="K/0">K/0</option>
                   <option value="K/1">K/1</option>
                   <option value="K/2">K/2</option>
                   <option value="K/3">K/3</option>
+
                   <option value="K/I/0">K/I/0</option>
                   <option value="K/I/1">K/I/1</option>
                   <option value="K/I/2">K/I/2</option>
                   <option value="K/I/3">K/I/3</option>
+
                 </select>
+
               </div>
 
+
               <div class="upload-field">
+
                 <label for="lampiranNpwp">
                   Lampiran NPWP
                   <b>*</b>
                 </label>
 
                 <div class="upload-control">
+
                   <label
                     class="upload-box"
                     for="lampiranNpwp"
                   >
+
                     <input
                       id="lampiranNpwp"
                       name="LampiranNPWP"
@@ -917,7 +1221,9 @@
                     <i data-file-name>
                       Belum ada file
                     </i>
+
                   </label>
+
 
                   <button
                     type="button"
@@ -927,29 +1233,45 @@
                   >
                     Hapus
                   </button>
+
                 </div>
+
 
                 <small
                   data-default-text="Format: NPWP_Nama.pdf • Maksimal 5 MB"
                 >
                   Format: NPWP_Nama.pdf • Maksimal 5 MB
                 </small>
+
               </div>
+
             </div>
+
           </section>
 
-          <!-- DATA PASANGAN -->
+
+          <!-- ==============================================
+               DATA PASANGAN
+               ============================================== -->
+
           <section class="form-section">
+
             <div class="section-head">
+
               <div>
-                <h3>Data Pasangan</h3>
+
+                <h3>
+                  Data Pasangan
+                </h3>
 
                 <p>
                   Aktifkan YA jika sudah memiliki pasangan.
                 </p>
+
               </div>
 
               <label class="switch">
+
                 <input
                   id="memilikiPasangan"
                   type="checkbox"
@@ -959,18 +1281,26 @@
                   <i></i>
                 </span>
 
-                <em data-toggle-state="memilikiPasangan">
+                <em
+                  data-toggle-state="memilikiPasangan"
+                >
                   TIDAK
                 </em>
+
               </label>
+
             </div>
+
 
             <div
               id="partnerFields"
               class="is-hidden"
             >
+
               <div class="grid three">
+
                 <div class="field">
+
                   <label for="namaPasangan">
                     Nama Pasangan
                     <b>*</b>
@@ -981,9 +1311,12 @@
                     name="NamaPasangan"
                     disabled
                   >
+
                 </div>
 
+
                 <div class="field">
+
                   <label for="nomorKtpPasangan">
                     Nomor KTP Pasangan
                     <b>*</b>
@@ -997,19 +1330,24 @@
                     pattern="[0-9]{16}"
                     disabled
                   >
+
                 </div>
 
+
                 <div class="upload-field">
+
                   <label for="lampiranKtpPasangan">
                     Lampiran KTP Pasangan
                     <b>*</b>
                   </label>
 
                   <div class="upload-control">
+
                     <label
                       class="upload-box"
                       for="lampiranKtpPasangan"
                     >
+
                       <input
                         id="lampiranKtpPasangan"
                         name="LampiranKTPPasangan"
@@ -1026,6 +1364,7 @@
                       <i data-file-name>
                         Belum ada file
                       </i>
+
                     </label>
 
                     <button
@@ -1036,6 +1375,7 @@
                     >
                       Hapus
                     </button>
+
                   </div>
 
                   <small
@@ -1043,24 +1383,40 @@
                   >
                     PDF • Maksimal 5 MB
                   </small>
+
                 </div>
+
               </div>
+
             </div>
+
           </section>
 
-          <!-- DATA ANAK -->
+
+          <!-- ==============================================
+               DATA ANAK
+               ============================================== -->
+
           <section class="form-section">
+
             <div class="section-head">
+
               <div>
-                <h3>Data Anak</h3>
+
+                <h3>
+                  Data Anak
+                </h3>
 
                 <p>
                   Aktifkan YA jika sudah memiliki anak.
                   Minimal satu anak harus diisi lengkap.
                 </p>
+
               </div>
 
+
               <label class="switch">
+
                 <input
                   id="memilikiAnak"
                   type="checkbox"
@@ -1070,21 +1426,33 @@
                   <i></i>
                 </span>
 
-                <em data-toggle-state="memilikiAnak">
+                <em
+                  data-toggle-state="memilikiAnak"
+                >
                   TIDAK
                 </em>
+
               </label>
+
             </div>
+
 
             <div
               id="childrenFields"
               class="is-hidden"
             >
+
               <div class="grid three">
+
+
                 <article class="child-card">
-                  <h4>Anak Pertama</h4>
+
+                  <h4>
+                    Anak Pertama
+                  </h4>
 
                   <div class="field">
+
                     <label for="namaAnakPertama">
                       Nama Anak Pertama
                     </label>
@@ -1094,18 +1462,23 @@
                       name="NamaAnakPertama"
                       disabled
                     >
+
                   </div>
 
+
                   <div class="upload-field">
+
                     <label for="lampiranAnakPertama">
                       Lampiran KTP / Akte Lahir
                     </label>
 
                     <div class="upload-control">
+
                       <label
                         class="upload-box"
                         for="lampiranAnakPertama"
                       >
+
                         <input
                           id="lampiranAnakPertama"
                           name="LampiranAnakPertama"
@@ -1122,6 +1495,7 @@
                         <i data-file-name>
                           Belum ada file
                         </i>
+
                       </label>
 
                       <button
@@ -1132,6 +1506,7 @@
                       >
                         Hapus
                       </button>
+
                     </div>
 
                     <small
@@ -1139,13 +1514,20 @@
                     >
                       PDF • Maksimal 5 MB
                     </small>
+
                   </div>
+
                 </article>
 
+
                 <article class="child-card">
-                  <h4>Anak Kedua</h4>
+
+                  <h4>
+                    Anak Kedua
+                  </h4>
 
                   <div class="field">
+
                     <label for="namaAnakKedua">
                       Nama Anak Kedua
                     </label>
@@ -1155,18 +1537,23 @@
                       name="NamaAnakKedua"
                       disabled
                     >
+
                   </div>
 
+
                   <div class="upload-field">
+
                     <label for="lampiranAnakKedua">
                       Lampiran KTP / Akte Lahir
                     </label>
 
                     <div class="upload-control">
+
                       <label
                         class="upload-box"
                         for="lampiranAnakKedua"
                       >
+
                         <input
                           id="lampiranAnakKedua"
                           name="LampiranAnakKedua"
@@ -1183,6 +1570,7 @@
                         <i data-file-name>
                           Belum ada file
                         </i>
+
                       </label>
 
                       <button
@@ -1193,6 +1581,7 @@
                       >
                         Hapus
                       </button>
+
                     </div>
 
                     <small
@@ -1200,13 +1589,20 @@
                     >
                       PDF • Maksimal 5 MB
                     </small>
+
                   </div>
+
                 </article>
 
+
                 <article class="child-card">
-                  <h4>Anak Ketiga</h4>
+
+                  <h4>
+                    Anak Ketiga
+                  </h4>
 
                   <div class="field">
+
                     <label for="namaAnakKetiga">
                       Nama Anak Ketiga
                     </label>
@@ -1216,18 +1612,23 @@
                       name="NamaAnakKetiga"
                       disabled
                     >
+
                   </div>
 
+
                   <div class="upload-field">
+
                     <label for="lampiranAnakKetiga">
                       Lampiran KTP / Akte Lahir
                     </label>
 
                     <div class="upload-control">
+
                       <label
                         class="upload-box"
                         for="lampiranAnakKetiga"
                       >
+
                         <input
                           id="lampiranAnakKetiga"
                           name="LampiranAnakKetiga"
@@ -1244,6 +1645,7 @@
                         <i data-file-name>
                           Belum ada file
                         </i>
+
                       </label>
 
                       <button
@@ -1254,6 +1656,7 @@
                       >
                         Hapus
                       </button>
+
                     </div>
 
                     <small
@@ -1261,18 +1664,33 @@
                     >
                       PDF • Maksimal 5 MB
                     </small>
+
                   </div>
+
                 </article>
+
               </div>
+
             </div>
+
           </section>
 
-          <!-- INFORMASI REKENING BANK -->
+
+          <!-- ==============================================
+               INFORMASI REKENING BANK
+               ============================================== -->
+
           <section class="form-section">
-            <h3>Informasi Rekening Bank</h3>
+
+            <h3>
+              Informasi Rekening Bank
+            </h3>
+
 
             <div class="grid three bank-grid">
+
               <div class="field">
+
                 <label for="namaPemilikTabungan">
                   Nama Pemilik Tabungan
                   <b>*</b>
@@ -1283,9 +1701,12 @@
                   name="NamaPemilikTabungan"
                   required
                 >
+
               </div>
 
+
               <div class="field">
+
                 <label for="nomorRekening">
                   Nomor Rekening
                   <b>*</b>
@@ -1299,9 +1720,12 @@
                   pattern="[0-9]{5,20}"
                   required
                 >
+
               </div>
 
+
               <div class="field">
+
                 <label for="namaBank">
                   Nama Bank
                   <b>*</b>
@@ -1312,6 +1736,7 @@
                   name="NamaBank"
                   required
                 >
+
                   <option
                     value=""
                     selected
@@ -1375,14 +1800,19 @@
                   <option value="Lainnya">
                     Bank Lainnya
                   </option>
+
                 </select>
+
               </div>
+
             </div>
+
 
             <div
               id="otherBankField"
               class="field is-hidden"
             >
+
               <label for="namaBankLainnya">
                 Nama Bank Lainnya
                 <b>*</b>
@@ -1394,9 +1824,12 @@
                 placeholder="Masukkan nama bank"
                 disabled
               >
+
             </div>
 
+
             <div class="upload-field bank-upload">
+
               <label for="lampiranBukuTabungan">
                 Lampiran Buku Tabungan /
                 Screenshot Nomor Rekening
@@ -1404,10 +1837,12 @@
               </label>
 
               <div class="upload-control">
+
                 <label
                   class="upload-box"
                   for="lampiranBukuTabungan"
                 >
+
                   <input
                     id="lampiranBukuTabungan"
                     name="LampiranBukuTabungan"
@@ -1424,7 +1859,9 @@
                   <i data-file-name>
                     Belum ada file
                   </i>
+
                 </label>
+
 
                 <button
                   type="button"
@@ -1434,6 +1871,7 @@
                 >
                   Hapus
                 </button>
+
               </div>
 
               <small
@@ -1441,16 +1879,29 @@
               >
                 Format: BukuTabungan_Nama.pdf • Maksimal 5 MB
               </small>
+
             </div>
+
           </section>
 
-          <!-- INFORMASI BPJS -->
+
+          <!-- ==============================================
+               INFORMASI BPJS
+               ============================================== -->
+
           <section class="form-section">
-            <h3>Informasi BPJS</h3>
+
+            <h3>
+              Informasi BPJS
+            </h3>
+
 
             <div class="grid two">
+
               <article class="plain-card">
+
                 <div class="field">
+
                   <label for="nomorBpjsKetenagakerjaan">
                     Nomor BPJS Ketenagakerjaan
                     <b>*</b>
@@ -1467,22 +1918,31 @@
                   >
 
                   <small>
-                    Isi 0 jika belum memiliki BPJS
-                    Ketenagakerjaan.
+                    Isi 0 jika belum memiliki BPJS Ketenagakerjaan.
                   </small>
+
                 </div>
 
+
                 <div class="upload-field">
+
                   <label for="lampiranBpjsKetenagakerjaan">
+
                     Lampiran BPJS Ketenagakerjaan
-                    <mark>Opsional</mark>
+
+                    <mark>
+                      Opsional
+                    </mark>
+
                   </label>
 
                   <div class="upload-control">
+
                     <label
                       class="upload-box"
                       for="lampiranBpjsKetenagakerjaan"
                     >
+
                       <input
                         id="lampiranBpjsKetenagakerjaan"
                         name="LampiranBPJSKetenagakerjaan"
@@ -1498,6 +1958,7 @@
                       <i data-file-name>
                         Belum ada file
                       </i>
+
                     </label>
 
                     <button
@@ -1508,6 +1969,7 @@
                     >
                       Hapus
                     </button>
+
                   </div>
 
                   <small
@@ -1515,11 +1977,16 @@
                   >
                     Opsional • PDF • Maksimal 5 MB
                   </small>
+
                 </div>
+
               </article>
 
+
               <article class="plain-card">
+
                 <div class="field">
+
                   <label for="nomorBpjsKesehatan">
                     Nomor BPJS Kesehatan
                     <b>*</b>
@@ -1536,22 +2003,31 @@
                   >
 
                   <small>
-                    Isi 0 jika belum memiliki
-                    BPJS Kesehatan.
+                    Isi 0 jika belum memiliki BPJS Kesehatan.
                   </small>
+
                 </div>
 
+
                 <div class="upload-field">
+
                   <label for="lampiranBpjsKesehatan">
+
                     Lampiran BPJS Kesehatan
-                    <mark>Opsional</mark>
+
+                    <mark>
+                      Opsional
+                    </mark>
+
                   </label>
 
                   <div class="upload-control">
+
                     <label
                       class="upload-box"
                       for="lampiranBpjsKesehatan"
                     >
+
                       <input
                         id="lampiranBpjsKesehatan"
                         name="LampiranBPJSKesehatan"
@@ -1567,7 +2043,9 @@
                       <i data-file-name>
                         Belum ada file
                       </i>
+
                     </label>
+
 
                     <button
                       type="button"
@@ -1577,6 +2055,7 @@
                     >
                       Hapus
                     </button>
+
                   </div>
 
                   <small
@@ -1584,17 +2063,31 @@
                   >
                     Opsional • PDF • Maksimal 5 MB
                   </small>
+
                 </div>
+
               </article>
+
             </div>
+
           </section>
 
-          <!-- PENDIDIKAN -->
+
+          <!-- ==============================================
+               PENDIDIKAN
+               ============================================== -->
+
           <section class="form-section">
-            <h3>Pendidikan Terakhir</h3>
+
+            <h3>
+              Pendidikan Terakhir
+            </h3>
+
 
             <div class="grid two">
+
               <div class="field">
+
                 <label for="pendidikanTerakhir">
                   Tingkat Pendidikan Tertinggi
                   <b>*</b>
@@ -1605,6 +2098,7 @@
                   name="PendidikanTerakhir"
                   required
                 >
+
                   <option
                     value=""
                     selected
@@ -1644,20 +2138,26 @@
                   <option value="Doktor / S3">
                     Doktor / S3
                   </option>
+
                 </select>
+
               </div>
 
+
               <div class="upload-field">
+
                 <label for="lampiranIjazah">
                   Lampiran Ijazah Terakhir
                   <b>*</b>
                 </label>
 
                 <div class="upload-control">
+
                   <label
                     class="upload-box"
                     for="lampiranIjazah"
                   >
+
                     <input
                       id="lampiranIjazah"
                       name="LampiranIjazah"
@@ -1674,6 +2174,7 @@
                     <i data-file-name>
                       Belum ada file
                     </i>
+
                   </label>
 
                   <button
@@ -1684,6 +2185,7 @@
                   >
                     Hapus
                   </button>
+
                 </div>
 
                 <small
@@ -1691,16 +2193,22 @@
                 >
                   Format: Ijazah_Nama.pdf • Maksimal 5 MB
                 </small>
+
               </div>
+
             </div>
+
           </section>
+
 
           <p
             id="pageThreeStatus"
             class="status"
           ></p>
 
+
           <div class="page-actions between">
+
             <button
               type="button"
               class="btn secondary"
@@ -1716,30 +2224,50 @@
             >
               Next ›
             </button>
+
           </div>
+
         </section>
 
+
         <!-- ==================================================
-             PAGE 4 — INFORMASI ADMINISTRATIF HR
+             PAGE 4
+             INFORMASI ADMINISTRATIF HR
              ================================================== -->
+
         <section
           class="form-page"
           data-form-page="4"
         >
+
           <div class="page-heading">
-            <h2>Informasi Administratif HR</h2>
+
+            <h2>
+              Informasi Administratif HR
+            </h2>
 
             <p>
               Lengkapi informasi penempatan dan administrasi.
             </p>
+
           </div>
 
-          <!-- INFORMASI PENEMPATAN -->
+
+          <!-- ==============================================
+               INFORMASI PENEMPATAN
+               ============================================== -->
+
           <section class="form-section">
-            <h3>Informasi Penempatan</h3>
+
+            <h3>
+              Informasi Penempatan
+            </h3>
+
 
             <div class="grid two">
+
               <div class="field">
+
                 <label for="tanggalJoin">
                   Tanggal Join
                   <b>*</b>
@@ -1751,16 +2279,21 @@
                   type="date"
                   required
                 >
+
               </div>
 
+
               <fieldset class="field">
+
                 <legend>
                   Lokasi Kerja (Citicon)
                   <b>*</b>
                 </legend>
 
                 <div class="radio-row">
+
                   <label class="radio">
+
                     <input
                       type="radio"
                       name="LokasiKerja"
@@ -1768,10 +2301,15 @@
                       required
                     >
 
-                    <span>Jakarta</span>
+                    <span>
+                      Jakarta
+                    </span>
+
                   </label>
 
+
                   <label class="radio">
+
                     <input
                       type="radio"
                       name="LokasiKerja"
@@ -1779,13 +2317,21 @@
                       required
                     >
 
-                    <span>Yogyakarta</span>
+                    <span>
+                      Yogyakarta
+                    </span>
+
                   </label>
+
                 </div>
+
               </fieldset>
+
             </div>
 
+
             <div class="field">
+
               <label for="posisi">
                 Posisi
                 <b>*</b>
@@ -1796,15 +2342,27 @@
                 name="Posisi"
                 required
               >
+
             </div>
+
           </section>
 
-          <!-- STRUKTUR ORGANISASI -->
+
+          <!-- ==============================================
+               STRUKTUR ORGANISASI
+               ============================================== -->
+
           <section class="form-section">
-            <h3>Struktur Organisasi</h3>
+
+            <h3>
+              Struktur Organisasi
+            </h3>
+
 
             <div class="grid two">
+
               <div class="field">
+
                 <label for="direktorat">
                   Direktorat
                   <b>*</b>
@@ -1819,9 +2377,12 @@
                     Memuat direktorat...
                   </option>
                 </select>
+
               </div>
 
+
               <div class="field">
+
                 <label for="groupUnit">
                   Group / Unit / Sub-Unit
                 </label>
@@ -1839,13 +2400,17 @@
                 <small>
                   Pilihan mengikuti direktorat yang dipilih.
                 </small>
+
               </div>
+
             </div>
+
 
             <div
               id="otherUnitField"
               class="field is-hidden"
             >
+
               <label for="groupUnitLainnya">
                 Group / Unit / Sub-Unit Lainnya
                 <b>*</b>
@@ -1857,24 +2422,37 @@
                 placeholder="Masukkan nama group / unit / sub-unit"
                 disabled
               >
+
             </div>
+
           </section>
 
-          <!-- DOKUMEN DAN PIC -->
+
+          <!-- ==============================================
+               DOKUMEN DAN PIC
+               ============================================== -->
+
           <section class="form-section">
-            <h3>Dokumen & PIC</h3>
+
+            <h3>
+              Dokumen & PIC
+            </h3>
+
 
             <div class="upload-field offer-upload">
+
               <label for="signedOfferProposal">
                 Lampiran Signed Offer Proposal
                 <b>*</b>
               </label>
 
               <div class="upload-control">
+
                 <label
                   class="upload-box"
                   for="signedOfferProposal"
                 >
+
                   <input
                     id="signedOfferProposal"
                     name="SignedOfferProposal"
@@ -1891,7 +2469,9 @@
                   <i data-file-name>
                     Belum ada file
                   </i>
+
                 </label>
+
 
                 <button
                   type="button"
@@ -1901,6 +2481,7 @@
                 >
                   Hapus
                 </button>
+
               </div>
 
               <small
@@ -1908,10 +2489,14 @@
               >
                 Format: Nama_SignedOfferProposal.pdf • Maksimal 5 MB
               </small>
+
             </div>
 
+
             <div class="grid three">
+
               <div class="field">
+
                 <label for="atasan">
                   Atasan
                   <b>*</b>
@@ -1922,9 +2507,12 @@
                   name="Atasan"
                   required
                 >
+
               </div>
 
+
               <div class="field">
+
                 <label for="recruiter">
                   Recruiter
                   <b>*</b>
@@ -1939,9 +2527,12 @@
                     Memuat recruiter...
                   </option>
                 </select>
+
               </div>
 
+
               <div class="field">
+
                 <label for="ukuranKaos">
                   Ukuran Kaos dan Jaket
                   (Panjang x Lebar)
@@ -1953,6 +2544,7 @@
                   name="UkuranKaosJaket"
                   required
                 >
+
                   <option
                     value=""
                     selected
@@ -1980,17 +2572,42 @@
                   <option value="XXL - 56 x 73 cm">
                     XXL - 56 x 73 cm
                   </option>
+
                 </select>
+
               </div>
+
             </div>
+
           </section>
+
+
+          <!-- ==============================================
+               SUBMIT STATUS
+               ============================================== -->
+
+          <div
+            id="submitProgress"
+            class="submit-progress is-hidden"
+          >
+
+            <div class="submit-spinner"></div>
+
+            <span id="submitProgressText">
+              Menyiapkan data...
+            </span>
+
+          </div>
+
 
           <p
             id="pageFourStatus"
             class="status"
           ></p>
 
+
           <div class="page-actions between">
+
             <button
               type="button"
               class="btn secondary"
@@ -1999,19 +2616,134 @@
               ‹ Back
             </button>
 
+
             <button
+              id="submitButton"
               type="submit"
               class="btn primary"
             >
               Submit
             </button>
+
           </div>
+
         </section>
+
       </form>
+
+
+      <!-- ==================================================
+           SUCCESS PAGE
+           ================================================== -->
+
+      <section
+        id="submissionSuccess"
+        class="submission-success is-hidden"
+        aria-live="polite"
+      >
+
+        <div class="success-icon">
+          ✓
+        </div>
+
+        <h2>
+          Data Berhasil Dikirim
+        </h2>
+
+        <p class="success-description">
+          Terima kasih. Informasi dan dokumen Anda telah berhasil
+          dikirim untuk diproses.
+        </p>
+
+        <div class="success-reference">
+
+          <span>
+            Submission ID
+          </span>
+
+          <strong id="successSubmissionId">
+            -
+          </strong>
+
+        </div>
+
+        <p class="success-note">
+          Form telah berhasil dikirim.
+        </p>
+
+      </section>
+
     </section>
+
   </main>
+
+
+  <!-- ======================================================
+       SUBMIT CONFIRMATION MODAL
+       ====================================================== -->
+
+  <div
+    id="submitConfirmModal"
+    class="modal-backdrop is-hidden"
+    aria-hidden="true"
+  >
+
+    <div
+      class="confirm-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="confirmSubmitTitle"
+    >
+
+      <div class="confirm-icon">
+        !
+      </div>
+
+      <h3 id="confirmSubmitTitle">
+        Konfirmasi Pengiriman
+      </h3>
+
+      <p>
+        Pastikan seluruh informasi dan dokumen yang Anda masukkan
+        sudah benar.
+      </p>
+
+      <p class="confirm-warning">
+        Setelah dikirim, data tidak dapat diubah melalui form ini.
+      </p>
+
+
+      <div class="confirm-actions">
+
+        <button
+          id="cancelSubmitButton"
+          type="button"
+          class="btn secondary"
+        >
+          Periksa Lagi
+        </button>
+
+        <button
+          id="confirmSubmitButton"
+          type="button"
+          class="btn primary"
+        >
+          Ya, Kirim Data
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ======================================================
+       SCRIPT
+       ====================================================== -->
 
   <script src="data/wilayah-data.js"></script>
   <script src="js/app.js"></script>
+
 </body>
 </html>
